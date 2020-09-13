@@ -24,14 +24,15 @@ public class Main {
         GameController gameController = new GameController();
 
         ReadFile readFile = new ReadFile();
-
+System.out.println("Aasa");
+//                gameController.startConsole(createHero);
         try {
             readFile.readFromFile("heroes.txt");
             validateArguments.numberOfArgs(args);
 
             createEnemies.createEnemies();
             String platform = args[0];
-            
+
             if (platform.equalsIgnoreCase("console"))
                 gameController.startConsole(createHero);
             else if (platform.equalsIgnoreCase("gui"))

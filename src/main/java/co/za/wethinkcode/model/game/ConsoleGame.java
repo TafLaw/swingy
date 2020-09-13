@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.*;
 import javax.validation.constraints.*;
 import java.util.*;
+import java.util.logging.Level;
 
 public class ConsoleGame extends AbGame {
     private HeroesFactory hero;
@@ -332,7 +333,12 @@ public class ConsoleGame extends AbGame {
     }
 
     private void movePlayer(String direction){
+
         game.movePlayer(mapController, this, direction);
+        if (newLevel)
+            levelUp();
+//        if (mapController.playerPosition.getPlayerColumn()-1 == playerCol && mapController.playerPosition.getPlayerRow() == playerRow)
+//            levelUp();
 //        int currentRow = mapController.playerPosition.getPlayerRow();
 //        int currentCol = mapController.playerPosition.getPlayerColumn();
 //
@@ -375,8 +381,6 @@ public class ConsoleGame extends AbGame {
 
     private void selectHeroType() {
         int check;
-//        @NotEmpty
-//        @Length(min = 3, max = 15, message = "Hero Name should be between 3-15 characters")
         String name;
 
         do {
@@ -396,27 +400,28 @@ public class ConsoleGame extends AbGame {
         consoleController.heroName();
         name = scanner.nextLine();
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        validator = Validation.buildDefaultValidatorFactory().getValidator();
-        validator = factory.getValidator();
 
-        //validate(name);
 //        Set<ConstraintViolation<String>> cvs;
 
         hero = createHero.createHero(name.trim(), CreateHero.heroTypes.get(check - 1));
+        if (hero == null) {
+            option = scanner.nextLine();
+            play(this.createHero);
+        }
+
         this.clear();
         this.stats();
     }
 
-    public static void validate(String value) {
-
-        Set<ConstraintViolation<String>> cvs = validator.validate(value);
-
-        for (ConstraintViolation<String> cv : cvs) {
-            System.out.println(cv.getPropertyPath() + ": " + cv.getMessage());
-        }
-        System.exit(1);
-    }
+//    public static void validate(String value) {
+//
+//        Set<ConstraintViolation<String>> cvs = validator.validate(value);
+//
+//        for (ConstraintViolation<String> cv : cvs) {
+//            System.out.println(cv.getPropertyPath() + ": " + cv.getMessage());
+//        }
+//        System.exit(1);
+//    }
 
     private void availableHeroes(){
         int check;
@@ -491,8 +496,12 @@ public class ConsoleGame extends AbGame {
     }
 
     @Override
-    public void nothing() {
-
+    protected void levelUp() {
+        newLevel = false;
+        int newLevel = hero.getAboutHero().getLevel() + 1;
+        hero.getAboutHero().setLevel(newLevel);
+        mapController.updateObjCreated();
+        mapController.viewMap(hero);
     }
 
     public void pickUpWeapon() {

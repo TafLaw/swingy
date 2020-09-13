@@ -7,12 +7,12 @@ import javax.validation.Validator;
 import java.util.ArrayList;
 
 public abstract class AbGame {
-    protected static Validator validator;
     protected static ArrayList<String> battleSimulation = new ArrayList<String>();
     protected int playerRow;
     protected int playerCol;
     public boolean droppedArtifact = false;
     protected EnemiesFactory theVillain;
+    public boolean newLevel =  false;
     /*
      * This will keep track of the enemy location*/
     protected int playerEnemyRow;
@@ -50,8 +50,6 @@ public abstract class AbGame {
         this.playerEnemyCol = playerEnemyCol;
     }
 
-    public abstract void nothing();
-
     protected void increaseAttack(HeroesFactory hero) {
         hero.getAboutHero().setAttack(hero.getAboutHero().getAttack() + hero.getWeapons().get(theVillain.getArtifacts().getWeapon())-2);
         hero.getStats().setWeapon(theVillain.getArtifacts().getWeapon());
@@ -78,4 +76,6 @@ public abstract class AbGame {
 
         hero.getStats().setHelm(theVillain.getArtifacts().getHelm());
     }
+
+    protected abstract void levelUp();
 }

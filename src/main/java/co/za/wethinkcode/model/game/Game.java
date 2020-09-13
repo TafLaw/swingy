@@ -37,35 +37,47 @@ public class Game {
 
         switch (direction) {
             case "up":
-                if (currentRow == 0)
-                    break;
                 mapController.playerPosition.setPlayerRow(currentRow-1);
+                currentRow = mapController.playerPosition.getPlayerRow();
                 consoleGame.setPlayerEnemyRow(mapController.playerPosition.getPlayerRow());
                 consoleGame.setPlayerEnemyCol(mapController.playerPosition.getPlayerColumn());
+                if (currentRow == 0) {
+                    consoleGame.newLevel = true;
+                    break;
+                }
                 break;
             case "down":
 
-                if (mapController.initMap.getRows() == currentRow +1)
-                    break;
                 mapController.playerPosition.setPlayerRow(currentRow+1);
+                currentRow = mapController.playerPosition.getPlayerRow();
                 consoleGame.setPlayerEnemyRow(mapController.playerPosition.getPlayerRow());
                 consoleGame.setPlayerEnemyCol(mapController.playerPosition.getPlayerColumn());
-                break;
-            case "left":
-                if (currentCol == 0)
+                if (mapController.initMap.getRows() == currentRow +1) {
+                    consoleGame.newLevel = true;
                     break;
-                mapController.playerPosition.setPlayerColumn(currentCol-1);
-                consoleGame.setPlayerEnemyRow(mapController.playerPosition.getPlayerRow());
-                consoleGame.setPlayerEnemyCol(mapController.playerPosition.getPlayerColumn());
+                }
                 break;
             case "right":
-                if (mapController.initMap.getRows() == currentCol+1)
-                    break;
                 mapController.playerPosition.setPlayerColumn(currentCol+1);
+                currentCol = mapController.playerPosition.getPlayerColumn();
                 consoleGame.setPlayerEnemyRow(mapController.playerPosition.getPlayerRow());
                 consoleGame.setPlayerEnemyCol(mapController.playerPosition.getPlayerColumn());
+                if (mapController.initMap.getRows() == currentCol+1) {
+                    consoleGame.newLevel = true;
+                    break;
+                }
                 break;
             default: break;
+            case "left":
+                mapController.playerPosition.setPlayerColumn(currentCol-1);
+                currentCol = mapController.playerPosition.getPlayerColumn();
+                consoleGame.setPlayerEnemyRow(mapController.playerPosition.getPlayerRow());
+                consoleGame.setPlayerEnemyCol(mapController.playerPosition.getPlayerColumn());
+                if (currentCol == 0) {
+                    consoleGame.newLevel = true;
+                    break;
+                }
+                break;
         }
     }
 }

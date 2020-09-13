@@ -1,14 +1,16 @@
 package co.za.wethinkcode.model.characters.heroes;
 
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 
 public class HeroName {
+    @NotEmpty(message = "A hero name can not be blank")
+    @Length(min = 3, max = 15, message = "Hero Name should be between 3-15 characters long")
     private String name;
     private String type;
-
-
 
     public HeroName(Build build) {
         this.name = build.name;

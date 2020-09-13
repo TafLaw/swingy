@@ -72,7 +72,7 @@ public class GuiGame extends AbGame{
     }
 
     @Override
-    public void nothing() {
+    protected void levelUp() {
 
     }
 }

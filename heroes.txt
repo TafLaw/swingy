@@ -2,29 +2,3 @@ Tafadzwa,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
 Sub Zero,Ronin,4,51,0,88,82,Cutlass,Vambrace,Steel
 Bean,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
 Tafad,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Law,Ronin,4,51,0,88,82,Cutlass,Vambrace,Steel
-Law,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Wal,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-Walli,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Walli,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-ASA,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-ASA,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-ASAp,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-ASAp,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-Samu,Samurai,2,40,0,65,62,Sword,Gauntlet,Violet
-Shino,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Law,Ronin,4,51,0,88,82,Cutlass,Vambrace,Steel
-Lee,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Lee,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Test,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Bba,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-sdfghjik,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-wsafsaf,Shinobi,1,50,0,70,75,Axe,Pauldron,Rusty
-ASE,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-New Hero,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-AWES,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-QWERT,Ronin,1,51,0,88,82,Cutlass,Vambrace,Steel
-Hero,Shinobi,1,50,0,70,75,Axe,Pauldron,Rusty
-Nope,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-j,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-2,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
