@@ -2,6 +2,7 @@ package co.za.wethinkcode.view;
 
 
 import co.za.wethinkcode.controller.GuiController;
+import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import org.hibernate.validator.constraints.Range;
 
@@ -29,6 +30,7 @@ public class GuiViews {
     JPanel confirmHeroNameButtonPanel;
     JButton confirmHeroNameButton;
 
+    HeroesFactory activeHero;
     JPanel titlePanel;
     JLabel titleLabel;
     Font titleFont;
@@ -68,15 +70,24 @@ public class GuiViews {
     GuiController.PlayGameHandler playGameHandler;
 
     JPanel gamePlayStatsPanel;
+    JPanel enemyStatsPanel;
+    JTextArea gamePlayStats;
+    JTextArea enemyStats;
     JPanel moveUpButtonPanel;
     JPanel moveDownButtonPanel;
     JPanel moveLeftButtonPanel;
     JPanel moveRightButtonPanel;
 
+    JPanel fightButtonPanel;
+    JPanel runButtonPanel;
+
     JButton moveUpButton;
     JButton moveDownButton;
     JButton moveLeftButton;
     JButton moveRightButton;
+
+    JButton fightButton;
+    JButton runButton;
 
     public GuiViews(GuiController.StartScreenHandler startScreenHandler) {
         this.startScreenHandler = startScreenHandler;
@@ -93,11 +104,19 @@ public class GuiViews {
         confirmHeroNameButton = new JButton("Enter");
         confirmHeroNameButtonPanel = new JPanel();
 
-        gamePlayStatsPanel = new JPanel();
+        gamePlayStatsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        enemyStatsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        gamePlayStats = new JTextArea();
+        enemyStats = new JTextArea();
         moveUpButtonPanel = new JPanel();
         moveLeftButtonPanel = new JPanel();
         moveDownButtonPanel = new JPanel();
         moveRightButtonPanel = new JPanel();
+        fightButtonPanel = new JPanel();
+        runButtonPanel = new JPanel();
+
+        fightButton = new JButton("Fight");
+        runButton = new JButton("Run");
         moveUpButton = new JButton("UP");
         moveDownButton = new JButton("DOWN");
         moveLeftButton = new JButton("LEFT");
@@ -441,7 +460,7 @@ public class GuiViews {
                     heroesPlayButtonPanel.setVisible(true);
 
                     gameHero = guiControllerObj.heroToString(newhero).split(",");
-                    System.out.println(gameHero);
+                    //System.out.println(gameHero);
                     createdheroStats.setText("Name: " + newhero.getHeroName().getName()
                             + "\nType : " + newhero.getHeroName().getType() + "\nLevel : " + newhero.getAboutHero().getLevel() + "\nHP : " + newhero.getAboutHero().getHitPoints() + "\nEXP : " + newhero.getAboutHero().getExperience()
                             + "\nDefence : " + newhero.getAboutHero().getDefence() + "\nAttack : " + newhero.getAboutHero().getAttack() + "\nArmor : " + newhero.getStats().getArmor() + "\nWeapon : " + newhero.getStats().getWeapon()
@@ -488,8 +507,10 @@ public class GuiViews {
     }
 
     public void playScreen() {
-
         mapPanel = new MapPanel(guiControllerObj.setGameHero(gameHero), new FlowLayout(FlowLayout.CENTER));
+        activeHero = guiControllerObj.gameHero;
+
+
         confirmHeroNameButtonPanel.setVisible(false);
         heroesPlayButtonPanel.setVisible(false);
         backToHeroTypesPanel.setVisible(false);
@@ -510,8 +531,19 @@ public class GuiViews {
         mapPanel.setBounds(180, 50, 600, 520);
         mapPanel.setBackground(Color.cyan);
 
+        gamePlayStats.setForeground(Color.WHITE);
+        gamePlayStats.setBackground(Color.BLUE);
+        gamePlayStats.setFont(generalFont);
+        gamePlayStats.setEditable(false);
+
         gamePlayStatsPanel.setBounds(2, 50, 200, 340);
         gamePlayStatsPanel.setBackground(Color.BLUE);
+        gamePlayStats.setText("EXP : " + activeHero.getAboutHero().getExperience() + "\n"
+                        + "Weapon : " + activeHero.getStats().getWeapon() + "\n"
+                        + "HP : " + activeHero.getAboutHero().getHitPoints() + "\n"
+                        + "Level : "+ activeHero.getAboutHero().getLevel() + "\n" + guiControllerObj.initMap.metEnemy
+                );
+        gamePlayStatsPanel.add(gamePlayStats);
 
         moveUpButtonPanel.setBounds(45, 400, 70, 40);
         moveUpButtonPanel.setBackground(Color.BLUE);
@@ -522,8 +554,13 @@ public class GuiViews {
         moveUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                activeHero = guiControllerObj.gameHero;
                 guiControllerObj.movePlayer(e.getActionCommand());
+                updateStats(activeHero);
                 mapPanel.repaint();
+
+                if (guiControllerObj.initMap.metEnemy)
+                    enemyStatsScreen(guiControllerObj.getEnemyStats());
             }
         });
         moveUpButtonPanel.add(moveUpButton);
@@ -537,8 +574,13 @@ public class GuiViews {
         moveDownButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                activeHero = guiControllerObj.gameHero;
                 guiControllerObj.movePlayer(e.getActionCommand());
+                updateStats(activeHero);
                 mapPanel.repaint();
+
+                if (guiControllerObj.initMap.metEnemy)
+                    enemyStatsScreen(guiControllerObj.getEnemyStats());
             }
         });
         moveDownButtonPanel.add(moveDownButton);
@@ -552,8 +594,13 @@ public class GuiViews {
         moveLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                activeHero = guiControllerObj.gameHero;
                 guiControllerObj.movePlayer(e.getActionCommand());
+                updateStats(activeHero);
                 mapPanel.repaint();
+
+                if (guiControllerObj.initMap.metEnemy)
+                    enemyStatsScreen(guiControllerObj.getEnemyStats());
             }
         });
         moveLeftButtonPanel.add(moveLeftButton);
@@ -567,8 +614,13 @@ public class GuiViews {
         moveRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                activeHero = guiControllerObj.gameHero;
                 guiControllerObj.movePlayer(e.getActionCommand());
+                updateStats(activeHero);
                 mapPanel.repaint();
+
+                if (guiControllerObj.initMap.metEnemy)
+                    enemyStatsScreen(guiControllerObj.getEnemyStats());
             }
         });
         moveRightButtonPanel.add(moveRightButton);
@@ -580,5 +632,89 @@ public class GuiViews {
         container.add(moveRightButtonPanel);
         container.add(gamePlayStatsPanel);
 
+//        if (guiControllerObj.initMap)
+    }
+
+    private void enemyStatsScreen(EnemiesFactory eStats) {
+        gamePlayStatsPanel.setVisible(false);
+
+        moveUpButtonPanel.setVisible(false);
+        moveDownButtonPanel.setVisible(false);
+        moveLeftButtonPanel.setVisible(false);
+        moveRightButtonPanel.setVisible(false);
+
+        enemyStats.setForeground(Color.WHITE);
+        enemyStats.setBackground(Color.BLUE);
+        enemyStats.setFont(generalFont);
+        enemyStats.setEditable(false);
+
+        runButtonPanel.setBounds(80, 440, 85, 40);
+        runButtonPanel.setBackground(Color.BLUE);
+        runButton.setFont(generalFont);
+        runButton.setForeground(Color.blue);
+        runButton.setFocusPainted(false);
+//        runButton.setActionCommand("right");
+        runButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeHero = guiControllerObj.gameHero;
+                guiControllerObj.movePlayer(e.getActionCommand());
+                updateStats(activeHero);
+                mapPanel.repaint();
+
+                if (guiControllerObj.initMap.metEnemy)
+                    enemyStatsScreen(guiControllerObj.getEnemyStats());
+            }
+        });
+        runButtonPanel.add(runButton);
+
+        fightButtonPanel.setBounds(2, 440, 80, 40);
+        fightButtonPanel.setBackground(Color.BLUE);
+        fightButton.setFont(generalFont);
+        fightButton.setForeground(Color.blue);
+        fightButton.setFocusPainted(false);
+//        fightButton.setActionCommand("left");
+        fightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String result = guiControllerObj.fight();
+                switch (result){
+                    case "lost":
+                        break;
+                    case "won":
+                }
+//                activeHero = guiControllerObj.gameHero;
+//                guiControllerObj.movePlayer(e.getActionCommand());
+//                updateStats(activeHero);
+//                mapPanel.repaint();
+//
+//                if (guiControllerObj.initMap.metEnemy)
+//                    enemyStatsScreen(guiControllerObj.getEnemyStats());
+            }
+        });
+        fightButtonPanel.add(fightButton);
+
+        enemyStatsPanel.setBounds(2, 50, 200, 340);
+        enemyStatsPanel.setBackground(Color.BLUE);
+        enemyStats.setText("Name       : " + eStats.getAboutEnemy().getName() + "\n"
+                                + "Attack       : " + eStats.getAboutEnemy().getAttack() + "\n"
+                                + "Defence   : " + eStats.getAboutEnemy().getDefence() + "\n"
+                                + "Armor        : " + eStats.getArtifacts().getArmor() + "\n"
+                                + "Helmet     : " + eStats.getArtifacts().getHelm() + "\n"
+                                + "Weapon   : " + eStats.getArtifacts().getWeapon()
+        );
+        enemyStatsPanel.add(enemyStats);
+
+        container.add(fightButtonPanel);
+        container.add(runButtonPanel);
+        container.add(enemyStatsPanel);
+    }
+
+    private void updateStats(HeroesFactory activeHero){
+        gamePlayStats.setText("EXP : " + activeHero.getAboutHero().getExperience() + "\n"
+                + "Weapon : " + activeHero.getStats().getWeapon() + "\n"
+                + "HP : " + activeHero.getAboutHero().getHitPoints() + "\n"
+                + "Level : "+ activeHero.getAboutHero().getLevel() + "\n" + guiControllerObj.initMap.metEnemy
+        );
     }
 }

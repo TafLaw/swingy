@@ -58,16 +58,21 @@ public class ConsoleViews {
         for (String line:results) {
             System.out.print(line);
         }
-        System.out.println("\nYou won the battle");
+        System.out.println("\n\nYou won the battle");
     }
 
     public void takeArtifact() {
         System.out.println("\nWhat would you like to do?\n");
-        System.out.println("1. Pick up weapon");
+        System.out.println("1. Pick up artifact");
         System.out.println("2. Leave");
     }
 
     public void enter(){
         System.out.println("Press enter to continue");
+    }
+
+    public void cantLevelUp() {
+        System.out.println("\nYou won the Game but you do not have enough EXP to level up\n");
+        System.out.println("Press Enter to save and quit");
     }
 }

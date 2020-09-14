@@ -22,7 +22,7 @@ public class MapView {
         }
         else {
             this.section = 1;
-            System.out.println("\nEXP : " + heroesFactory.getAboutHero().getExperience() + " | Weapon : " + heroesFactory.getStats().getWeapon() + " | HP : " + heroesFactory.getAboutHero().getHitPoints() + "\n");
+            System.out.println("\nEXP : " + heroesFactory.getAboutHero().getExperience() + " | Weapon : " + heroesFactory.getStats().getWeapon() + " | HP : " + heroesFactory.getAboutHero().getHitPoints() + " | Level : "+heroesFactory.getAboutHero().getLevel()+ "\n");
             for (int r = 0; r < initMap.getRows(); r++) {
                 for (int c = 0; c < initMap.getColumns(); c++) {
 //                if(initMap.getWholeMap()[r][c] == "H")
@@ -48,6 +48,7 @@ public class MapView {
         System.out.println("2. Move Down");
         System.out.println("3. Move Left");
         System.out.println("4. Move Right\n");
+        System.out.println("\n0. Save and Exit");
     }
 
     private void fightOrRun(){

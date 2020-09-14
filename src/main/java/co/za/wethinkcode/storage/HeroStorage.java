@@ -16,19 +16,47 @@ public class HeroStorage {
         return ReadFile.allHeroes;
     }
 
-    public void saveHero(HeroesFactory heroesFactory){
-        String newHero = heroesFactory.getHeroName().getName() + ","
-                        + heroesFactory.getHeroName().getType() + ","
-                        + heroesFactory.getAboutHero().getLevel() + ","
-                        + heroesFactory.getAboutHero().getHitPoints() + ","
-                        + heroesFactory.getAboutHero().getExperience() + ","
-                        + heroesFactory.getAboutHero().getDefence() + ","
-                        + heroesFactory.getAboutHero().getAttack() + ","
-                        + heroesFactory.getStats().getWeapon() + ","
-                        + heroesFactory.getStats().getArmor() + ","
-                        + heroesFactory.getStats().getHelm();
+    private String newHero(HeroesFactory heroesFactory){
+        return heroesFactory.getHeroName().getName() + ","
+                + heroesFactory.getHeroName().getType() + ","
+                + heroesFactory.getAboutHero().getLevel() + ","
+                + heroesFactory.getAboutHero().getHitPoints() + ","
+                + heroesFactory.getAboutHero().getExperience() + ","
+                + heroesFactory.getAboutHero().getDefence() + ","
+                + heroesFactory.getAboutHero().getAttack() + ","
+                + heroesFactory.getStats().getWeapon() + ","
+                + heroesFactory.getStats().getArmor() + ","
+                + heroesFactory.getStats().getHelm();
+
+    }
+
+    private ArrayList<String> addToHeroesList(HeroesFactory heroesFactory){
+        String newHero = newHero(heroesFactory);
         ArrayList<String> heroes = this.allAvailableHeroes();
         heroes.add(newHero);
-        writeFile.writeToFile(heroes);
+        return heroes;
+    }
+
+    public void saveHero(HeroesFactory heroesFactory){
+        writeFile.writeToFile(addToHeroesList(heroesFactory));
+    }
+
+    public void saveAndExit(HeroesFactory hero, int index) {
+        ArrayList<String> heroes = this.allAvailableHeroes();
+        String newHero = newHero(hero);
+
+        writeFile.writeToFile(replaceHero(heroes, index, newHero));
+    }
+
+    private ArrayList<String> replaceHero(ArrayList<String> heroes, int index, String newHero) {
+        int i = 0;
+        while (i < heroes.size()){
+            if (i == index){
+                heroes.remove(index);
+                heroes.add(index, newHero);
+            }
+            i++;
+        }
+        return heroes;
     }
 }

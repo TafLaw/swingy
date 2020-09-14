@@ -1,5 +1,6 @@
 package co.za.wethinkcode.controller;
 
+import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.characters.heroes.CreateHero;
 import co.za.wethinkcode.model.characters.heroes.HeroType;
@@ -17,6 +18,7 @@ import static co.za.wethinkcode.model.characters.heroes.HeroType.*;
 
 public class GuiController {
     //private GuiGame play;
+    private EnemiesFactory enemiesFactory;
     private GuiViews guiViews;
     private GuiGame guiGameObj;
     public StartScreenHandler startScreenHandler;
@@ -26,8 +28,8 @@ public class GuiController {
     public  ChoiceHandler choiceHandler;
     private String[] allHeroes;
     private MapController mapController;
-    private HeroesFactory gameHero;
-    private InitMap initMap;
+    public HeroesFactory gameHero;
+    public InitMap initMap;
 
     public GuiController(MapController mapController) {
         //play = new GuiGame();
@@ -64,6 +66,7 @@ public class GuiController {
 
     public void movePlayer(String direction){
         guiGameObj.movePlayer(direction);
+        mapController.mapPanel(this.gameHero);
     }
 
     public HeroesFactory createHero(String type, String name){
@@ -85,6 +88,15 @@ public class GuiController {
                 heroType = Ninja;
         }
         return guiGameObj.createHero(heroType, name);
+    }
+
+    public EnemiesFactory getEnemyStats() {
+        return guiGameObj.metAnEnemy();
+    }
+
+    public String fight(){
+
+        return guiGameObj.fight(guiGameObj.getVillain());
     }
 
     public class StartScreenHandler implements ActionListener {

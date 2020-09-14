@@ -1,4 +1,7 @@
-Tafadzwa,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+Tafadzwa,Ninja,1,8,350,60,56,Ninja Stars,Couter,Sphere
 Sub Zero,Ronin,4,51,0,88,82,Cutlass,Vambrace,Steel
 Bean,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
 Tafad,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
+Tawe,Shinobi,3,60,3600,73,75,Axe,Gauntlet,Sphere
+Test Hero,Ronin,4,67,7850,93,95,Sjambok,Vambrace,Mask
+Teara,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet

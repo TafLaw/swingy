@@ -90,6 +90,13 @@ public class ConsoleController {
         consoleGameObj.backToMap();
     }
 
+    public void cantLevelUp() {
+        consoleViews.cantLevelUp();
+        option = scanner.nextLine();
+        consoleGameObj.saveAndExit();
+        consoleGameObj.backToMain();
+    }
+
 //    public void startConsole(CreateHero createHero){
 //        play.play(createHero);
 //        //TODO: FUNCTIONALITY WILL BE IN THE MODEL/GAME/CONSOLEGAME CLASS

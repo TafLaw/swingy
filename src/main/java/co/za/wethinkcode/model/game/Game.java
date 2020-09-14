@@ -6,8 +6,21 @@ import co.za.wethinkcode.model.characters.heroes.AboutHero;
 import co.za.wethinkcode.model.characters.heroes.HeroName;
 import co.za.wethinkcode.model.characters.heroes.Stats;
 
+import java.util.HashMap;
+
 public class Game {
     private HeroesFactory hero;
+    private HashMap<String, Integer> levels = new HashMap<>();
+
+    public Game() {
+        levels.put("Level 1", 1000);
+        levels.put("Level 2", 2450);
+        levels.put("Level 3", 4800);
+        levels.put("Level 4", 8050);
+        levels.put("Level 5", 11000);
+        levels.put("Level 6", 12200);
+        levels.put("Level 7", 14250);
+    }
 
     public HeroesFactory storePlayer(String[] hero){
         HeroName heroName = new HeroName();
@@ -79,5 +92,44 @@ public class Game {
                 }
                 break;
         }
+
+    }
+
+    public boolean canLevelUp(HeroesFactory hero){
+        int heroLevel = hero.getAboutHero().getLevel();
+        int heroEXP = hero.getAboutHero().getExperience();
+        boolean levelUp = false;
+
+        switch (heroLevel){
+            case 1 :
+                if (heroEXP > levels.get("Level 1"))
+                    levelUp = true;
+                break;
+            case 2 :
+                if (heroEXP > levels.get("Level 2"))
+                    levelUp = true;
+                break;
+            case 3 :
+                if (heroEXP > levels.get("Level 3"))
+                    levelUp = true;
+                break;
+            case 4 :
+                if (heroEXP > levels.get("Level 4"))
+                    levelUp = true;
+                break;
+            case 5 :
+                if (heroEXP > levels.get("Level 5"))
+                    levelUp = true;
+                break;
+            case 6 :
+                if (heroEXP > levels.get("Level 6"))
+                    levelUp = true;
+                break;
+            case 7 :
+                if (heroEXP > levels.get("Level 7"))
+                    levelUp = true;
+                break;
+        }
+        return levelUp;
     }
 }

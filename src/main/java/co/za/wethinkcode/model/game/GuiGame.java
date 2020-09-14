@@ -2,12 +2,15 @@ package co.za.wethinkcode.model.game;
 
 import co.za.wethinkcode.controller.GuiController;
 import co.za.wethinkcode.controller.MapController;
+import co.za.wethinkcode.model.characters.enemies.CreateEnemies;
+import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.characters.heroes.CreateHero;
 import co.za.wethinkcode.model.characters.heroes.HeroType;
 import co.za.wethinkcode.storage.HeroStorage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 //import static co.za.wethinkcode.model.characters.heroes.HeroType.*;
 
@@ -15,7 +18,7 @@ public class GuiGame extends AbGame{
     private CreateHero createHero;
     private GuiController guiController;
     private HeroStorage heroStorage;
-    private HeroesFactory hero;
+    //private HeroesFactory hero;
     private MapController mapController;
     private Game game;
     private int playerRow;
@@ -39,6 +42,7 @@ public class GuiGame extends AbGame{
 
     public HeroesFactory storePlayer(String[] hero) {
         this.hero = this.game.storePlayer(hero);
+        System.out.println(this.hero);
         return this.hero;
     }
 
@@ -46,6 +50,9 @@ public class GuiGame extends AbGame{
         game.movePlayer(mapController, this, direction);
     }
 
+    public HeroesFactory getha(){
+        return this.hero;
+    }
 
     public String[] getAllHeroes(){
         return heroStorage.allAvailableHeroes().toArray(new String[]{});
@@ -69,6 +76,24 @@ public class GuiGame extends AbGame{
                 + heroesFactory.getStats().getWeapon() + ","
                 + heroesFactory.getStats().getArmor() + ","
                 + heroesFactory.getStats().getHelm();
+    }
+
+    public EnemiesFactory metAnEnemy() {
+        Random random = new Random();
+        int randomEnemy;
+        randomEnemy = random.nextInt(CreateEnemies.enemiesFactory.size());
+        //this.guiController.enemyStats(CreateEnemies.enemiesFactory.get(randomEnemy));
+        theVillain = CreateEnemies.enemiesFactory.get(randomEnemy);
+        return theVillain;
+    }
+
+    public String fight(EnemiesFactory enemy) {
+        System.out.println("AESR :"+this.hero);
+        return fightEnemy(enemy);
+    }
+
+    public EnemiesFactory getVillain(){
+        return theVillain;
     }
 
     @Override

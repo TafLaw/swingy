@@ -14,7 +14,6 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class ConsoleGame extends AbGame {
-    private HeroesFactory hero;
     public Scanner scanner;
     public static int section;
     private int chance;
@@ -29,7 +28,7 @@ public class ConsoleGame extends AbGame {
     @NotEmpty
     @Size(min = 1, max = 3)
     private String option;
-    private CreateHero createHero;
+
     private MapController mapController;
     private ConsoleController consoleController;
     private HeroStorage heroStorage;
@@ -134,13 +133,20 @@ public class ConsoleGame extends AbGame {
                     }
                     this.clear();
                 }catch (Exception e){
-                    check = 0;
+                    check = -1;
                     this.clear();
                 }
 
-            } while (check < 1 || check > 4);
-            if (!gameOver)
-                this.movePlayer(direction[check - 1]);
+            } while (check < 0 || check > 4);
+            if (check == 0){
+                mapController.updateObjCreated();
+                saveAndExit();
+                break;
+            }
+            else {
+                if (!gameOver)
+                    this.movePlayer(direction[check - 1]);
+            }
         }
         gameOver = false;
         this.play(this.createHero);
@@ -173,16 +179,10 @@ public class ConsoleGame extends AbGame {
         int decider = random.nextInt(101);
         if (decider >= 0 && decider <= 50)
         {
-            //TODO: This will be an unsuccessful escape
             this.fight(enemiesFactory);
             return null;
         }
         else {
-            //TODO: escaped successfully
-//            System.out.println("You successfully escaped the enemy");
-//            mapController.playerPosition.setPlayerRow(this.playerRow);
-//            mapController.playerPosition.setPlayerColumn(this.playerCol);
-//            mapController.resetEnemy(this.playerEnemyRow, this.playerEnemyCol);
             mapController.playerPosition.setPlayerRow(this.playerRow);
             mapController.playerPosition.setPlayerColumn(this.playerCol);
             mapController.resetEnemy(this.playerEnemyRow, this.playerEnemyCol);
@@ -191,76 +191,86 @@ public class ConsoleGame extends AbGame {
     }
 
     private void fight(EnemiesFactory enemy) {
-////        this.clear();
         section = 1;
-        String whatWasDropped = "";
-        Random random = new Random();
-        int playerHP;
-        int enemyHP;
-        int gainedExp;
-        int resetEnemyHP = enemy.getAboutEnemy().getHitPoints();
-        battleSimulation.clear();
-
-
-
-        String heroWeapon = hero.getStats().getWeapon();
-        String enemyWeapon = enemy.getArtifacts().getWeapon();
-        System.out.println(hero.getAboutHero().getHitPoints() + " " + enemy.getAboutEnemy().getHitPoints());
-        while (hero.getAboutHero().getHitPoints() > 0 && enemy.getAboutEnemy().getHitPoints() > 0){
-            playerHP = random.nextInt(hero.getWeapons().get(heroWeapon));
-            playerHP = this.attackEnemy(playerHP, enemy);
-            enemy.getAboutEnemy().setHitPoints(enemy.getAboutEnemy().getHitPoints() - playerHP);
-            battleSimulation.add("You hit "+enemy.getAboutEnemy().getName()+" by "+playerHP+" hit points. His HP is " + enemy.getAboutEnemy().getHitPoints()+ "\n");
-            if (enemy.getAboutEnemy().getHitPoints() <= 0)
+        String result = fightEnemy(enemy);
+        switch (result){
+            case "lost" :
+                this.gameOver(battleSimulation);
                 break;
-
-            enemyHP = random.nextInt(hero.getWeapons().get(enemyWeapon));
-            enemyHP = this.attackHero(enemyHP, enemy);
-            hero.getAboutHero().setHitPoints(hero.getAboutHero().getHitPoints() - enemyHP);
-            battleSimulation.add(enemy.getAboutEnemy().getName() + " hit you by "+enemyHP+", you have "+hero.getAboutHero().getHitPoints()+" HP\n");
-            if (hero.getAboutHero().getHitPoints() <= 0)
+            case "won" :
+                this.wonBattle(battleSimulation);
                 break;
         }
-        if (hero.getAboutHero().getHitPoints() <= 0) {
-            enemy.getAboutEnemy().setHitPoints(resetEnemyHP);
-            battleSimulation.add("You fought bravely, but unfortunately your hero died!\n");
-            this.gameOver(battleSimulation);
-//            hero.getAboutHero().setExperience();
-        }
-        else {
-            droppedArtifact = enemyDroppedArtifact();
-            enemy.getAboutEnemy().setHitPoints(resetEnemyHP);
-            if (enemy.getAboutEnemy().getAttack() > 70)
-                gainedExp = 500;
-            else
-                gainedExp = 350;
-            battleSimulation.add("You defeated "+enemy.getAboutEnemy().getName()+" and gained "+gainedExp+ " EXP\n");
-
-            if (chance >= 0 && chance <= 2){
-                switch (chance){
-                    case 0:
-                        whatWasDropped = enemy.getArtifacts().getWeapon();
-                        break;
-                    case 1:
-                        whatWasDropped = enemy.getArtifacts().getArmor();
-                        break;
-                    case 2:
-                        whatWasDropped = enemy.getArtifacts().getHelm();
-                        break;
-                }
-                battleSimulation.add(enemy.getAboutEnemy().getName()+" dropped his "+whatWasDropped);
-            }
-
-            hero.getAboutHero().setExperience(hero.getAboutHero().getExperience() + gainedExp);
-            this.wonBattle(battleSimulation);
-        }
+////        this.clear();
+//        section = 1;
+//        String whatWasDropped = "";
+//        Random random = new Random();
+//        int playerHP;
+//        int enemyHP;
+//        int gainedExp;
+//        int resetEnemyHP = enemy.getAboutEnemy().getHitPoints();
+//        battleSimulation.clear();
+//
+//
+//
+//        String heroWeapon = hero.getStats().getWeapon();
+//        String enemyWeapon = enemy.getArtifacts().getWeapon();
+//        System.out.println(hero.getAboutHero().getHitPoints() + " " + enemy.getAboutEnemy().getHitPoints());
+//        while (hero.getAboutHero().getHitPoints() > 0 && enemy.getAboutEnemy().getHitPoints() > 0){
+//            playerHP = random.nextInt(hero.getWeapons().get(heroWeapon));
+//            playerHP = this.attackEnemy(playerHP, enemy);
+//            enemy.getAboutEnemy().setHitPoints(enemy.getAboutEnemy().getHitPoints() - playerHP);
+//            battleSimulation.add("You hit "+enemy.getAboutEnemy().getName()+" by "+playerHP+" hit points. His HP is " + enemy.getAboutEnemy().getHitPoints()+ "\n");
+//            if (enemy.getAboutEnemy().getHitPoints() <= 0)
+//                break;
+//
+//            enemyHP = random.nextInt(hero.getWeapons().get(enemyWeapon));
+//            enemyHP = this.attackHero(enemyHP, enemy);
+//            hero.getAboutHero().setHitPoints(hero.getAboutHero().getHitPoints() - enemyHP);
+//            battleSimulation.add(enemy.getAboutEnemy().getName() + " hit you by "+enemyHP+", you have "+hero.getAboutHero().getHitPoints()+" HP\n");
+//            if (hero.getAboutHero().getHitPoints() <= 0)
+//                break;
+//        }
+//        if (hero.getAboutHero().getHitPoints() <= 0) {
+//            enemy.getAboutEnemy().setHitPoints(resetEnemyHP);
+//            battleSimulation.add("You fought bravely, but unfortunately your hero died!\n");
+//            this.gameOver(battleSimulation);
+////            hero.getAboutHero().setExperience();
+//        }
+//        else {
+//            droppedArtifact = enemyDroppedArtifact();
+//            enemy.getAboutEnemy().setHitPoints(resetEnemyHP);
+//            if (enemy.getAboutEnemy().getAttack() > 70)
+//                gainedExp = 500;
+//            else
+//                gainedExp = 350;
+//            battleSimulation.add("You defeated "+enemy.getAboutEnemy().getName()+" and gained "+gainedExp+ " EXP\n");
+//
+//            if (chance >= 0 && chance <= 2){
+//                switch (chance){
+//                    case 0:
+//                        whatWasDropped = enemy.getArtifacts().getWeapon();
+//                        break;
+//                    case 1:
+//                        whatWasDropped = enemy.getArtifacts().getArmor();
+//                        break;
+//                    case 2:
+//                        whatWasDropped = enemy.getArtifacts().getHelm();
+//                        break;
+//                }
+//                battleSimulation.add(enemy.getAboutEnemy().getName()+" dropped his "+whatWasDropped);
+//            }
+//
+//            hero.getAboutHero().setExperience(hero.getAboutHero().getExperience() + gainedExp);
+//            this.wonBattle(battleSimulation);
+//        }
     }
 
-    private boolean enemyDroppedArtifact() {
-        Random random = new Random();
-        chance = random.nextInt(6);
-        return chance < 3;
-    }
+//    private boolean enemyDroppedArtifact() {
+//        Random random = new Random();
+//        chance = random.nextInt(6);
+//        return chance < 3;
+//    }
 
     private void wonBattle(ArrayList<String> results) {
         consoleController.wonBattle(results);
@@ -272,65 +282,65 @@ public class ConsoleGame extends AbGame {
         mapController.updateObjCreated();
     }
 
-    private int attackEnemy(int playerHP, EnemiesFactory enemy){
-        int enemyDefended;
-        Random random = new Random();
-
-        if (enemy.getAboutEnemy().getDefence() > 72){
-            enemyDefended = random.nextInt(101);
-            if (enemyDefended >= 50)
-                playerHP -= 6;
-        }
-        else if (enemy.getAboutEnemy().getDefence() <= 72 && enemy.getAboutEnemy().getDefence() > 66)
-        {
-            enemyDefended = random.nextInt(101);
-            if (enemyDefended < 50 && enemyDefended > 20)
-                playerHP -= 3;
-        }
-        else if (enemy.getAboutEnemy().getDefence() <= 66){
-            enemyDefended = random.nextInt(101);
-            if (enemyDefended >= 20)
-                playerHP -= 1;
-        }
-
-        if (hero.getAboutHero().getAttack() > 65)
-            playerHP += 2;
-        else playerHP++;
-
-        if (playerHP < 0)
-            playerHP = 0;
-
-        return playerHP;
-    }
-
-    private int attackHero(int enemyHP, EnemiesFactory enemy){
-        int heroDefended;
-        Random random = new Random();
-
-        if (hero.getAboutHero().getDefence() > 72){
-            heroDefended = random.nextInt(101);
-            if (heroDefended >= 50)
-                enemyHP -= 6;
-        }
-        else if (hero.getAboutHero().getDefence() <= 72 && hero.getAboutHero().getDefence() > 66)
-        {
-            heroDefended = random.nextInt(101);
-            if (heroDefended < 50 && heroDefended > 20)
-                enemyHP -= 3;
-        }
-        else if (hero.getAboutHero().getDefence() <= 66){
-            heroDefended = random.nextInt(101);
-            if (heroDefended >= 20)
-                enemyHP -= 1;
-        }
-
-        if (enemy.getAboutEnemy().getAttack() > 65)
-            enemyHP += 2;
-        else enemyHP++;
-        if (enemyHP < 0)
-            enemyHP = 0;
-        return enemyHP;
-    }
+//    private int attackEnemy(int playerHP, EnemiesFactory enemy){
+//        int enemyDefended;
+//        Random random = new Random();
+//
+//        if (enemy.getAboutEnemy().getDefence() > 72){
+//            enemyDefended = random.nextInt(101);
+//            if (enemyDefended >= 50)
+//                playerHP -= 6;
+//        }
+//        else if (enemy.getAboutEnemy().getDefence() <= 72 && enemy.getAboutEnemy().getDefence() > 66)
+//        {
+//            enemyDefended = random.nextInt(101);
+//            if (enemyDefended < 50 && enemyDefended > 20)
+//                playerHP -= 3;
+//        }
+//        else if (enemy.getAboutEnemy().getDefence() <= 66){
+//            enemyDefended = random.nextInt(101);
+//            if (enemyDefended >= 20)
+//                playerHP -= 1;
+//        }
+//
+//        if (hero.getAboutHero().getAttack() > 65)
+//            playerHP += 2;
+//        else playerHP++;
+//
+//        if (playerHP < 0)
+//            playerHP = 0;
+//
+//        return playerHP;
+//    }
+//
+//    private int attackHero(int enemyHP, EnemiesFactory enemy){
+//        int heroDefended;
+//        Random random = new Random();
+//
+//        if (hero.getAboutHero().getDefence() > 72){
+//            heroDefended = random.nextInt(101);
+//            if (heroDefended >= 50)
+//                enemyHP -= 6;
+//        }
+//        else if (hero.getAboutHero().getDefence() <= 72 && hero.getAboutHero().getDefence() > 66)
+//        {
+//            heroDefended = random.nextInt(101);
+//            if (heroDefended < 50 && heroDefended > 20)
+//                enemyHP -= 3;
+//        }
+//        else if (hero.getAboutHero().getDefence() <= 66){
+//            heroDefended = random.nextInt(101);
+//            if (heroDefended >= 20)
+//                enemyHP -= 1;
+//        }
+//
+//        if (enemy.getAboutEnemy().getAttack() > 65)
+//            enemyHP += 2;
+//        else enemyHP++;
+//        if (enemyHP < 0)
+//            enemyHP = 0;
+//        return enemyHP;
+//    }
 
     private void movePlayer(String direction){
 
@@ -382,6 +392,7 @@ public class ConsoleGame extends AbGame {
     private void selectHeroType() {
         int check;
         String name;
+        ArrayList<String> allHeroes = heroStorage.allAvailableHeroes();
 
         do {
             try {
@@ -408,6 +419,8 @@ public class ConsoleGame extends AbGame {
             option = scanner.nextLine();
             play(this.createHero);
         }
+        heroInitialHP = hero.getAboutHero().getHitPoints();
+        heroIndex = allHeroes.size() - 1;
 
         this.clear();
         this.stats();
@@ -446,10 +459,12 @@ public class ConsoleGame extends AbGame {
                 }
             } while (check < 0 || check > allHeroes.size());
 
+            this.heroIndex = check - 1;
             if (check == 0)
                 this.play(this.createHero);
             chosenHero = allHeroes.get(check - 1);
             this.storePlayer(chosenHero.split(","));
+            heroInitialHP = this.hero.getAboutHero().getHitPoints();
         }
     }
 
@@ -499,9 +514,21 @@ public class ConsoleGame extends AbGame {
     protected void levelUp() {
         newLevel = false;
         int newLevel = hero.getAboutHero().getLevel() + 1;
-        hero.getAboutHero().setLevel(newLevel);
+
+        if (game.canLevelUp(hero)){
+            hero.getAboutHero().setLevel(newLevel);
+            mapController.updateObjCreated();
+            this.clear();
+            saveAndExit();
+            backToMap();
+        }
+        else this.cantLevelUp();
+    }
+
+    private void cantLevelUp() {
         mapController.updateObjCreated();
-        mapController.viewMap(hero);
+        consoleController.cantLevelUp();
+
     }
 
     public void pickUpWeapon() {
@@ -521,5 +548,9 @@ public class ConsoleGame extends AbGame {
     private void clear(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public void backToMain() {
+        this.play(this.createHero);
     }
 }
