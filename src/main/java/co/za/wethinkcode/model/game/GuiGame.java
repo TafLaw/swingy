@@ -40,6 +40,10 @@ public class GuiGame extends AbGame{
         System.out.println("Gui GamePlay");
     }
 
+    public ArrayList<String> getSimulationResults(){
+        return battleSimulation;
+    }
+
     public HeroesFactory storePlayer(String[] hero) {
         this.hero = this.game.storePlayer(hero);
         System.out.println(this.hero);

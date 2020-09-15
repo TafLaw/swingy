@@ -55,6 +55,7 @@ public class GuiController {
 
     public InitMap setGameHero(String[] hero){
         this.gameHero = guiGameObj.storePlayer(hero);
+        mapController.updateObjCreated();
         this.initMap = mapController.mapPanel(gameHero);
 
         return this.initMap;
@@ -65,6 +66,7 @@ public class GuiController {
     }
 
     public void movePlayer(String direction){
+        System.out.println("move");
         guiGameObj.movePlayer(direction);
         mapController.mapPanel(this.gameHero);
     }
@@ -98,6 +100,30 @@ public class GuiController {
 
         return guiGameObj.fight(guiGameObj.getVillain());
     }
+
+    public String[] getBattleSimulation(){
+        return guiGameObj.getSimulationResults().toArray(new String[]{});
+    }
+
+    public void resetMetEnemy() {
+        initMap.metEnemy = false;
+    }
+
+//    public class moveUpHandler implements ActionListener{
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            guiViews.activeHero = gameHero;
+//
+//            movePlayer(e.getActionCommand());
+//            guiViews.updateStats(guiViews.activeHero);
+//            guiViews.mapPanel.repaint();
+//
+//            if (guiControllerObj.initMap.metEnemy){
+//                enemyStatsScreen(guiControllerObj.getEnemyStats());
+//                guiControllerObj.resetMetEnemy();
+//            }
+//        }
+//    }
 
     public class StartScreenHandler implements ActionListener {
         @Override
@@ -137,6 +163,8 @@ public class GuiController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Play once");
             guiViews.playScreen();
         }
     }

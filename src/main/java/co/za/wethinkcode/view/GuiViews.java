@@ -40,6 +40,7 @@ public class GuiViews {
     JPanel createdheroesPanel;
     JList heroesList;
     JScrollPane scrollPanel;
+    JScrollPane resultsScrollPanel;
     JLabel heroesTitleLabel;
     JTextArea heroStats;
     JTextArea createdheroStats;
@@ -79,7 +80,15 @@ public class GuiViews {
     JPanel moveRightButtonPanel;
 
     JPanel fightButtonPanel;
+    JPanel saveAndExitButtonPanel;
+    JPanel backToMapButtonPanel;
     JPanel runButtonPanel;
+    JList battleResultsList;
+//    JTextArea battleResults;
+    MoveUpHandler moveUpHandler;
+    MoveRightHandler moveRightHandler;
+    MoveLeftHandler moveLeftHandler;
+    MoveDownHandler moveDownHandler;
 
     JButton moveUpButton;
     JButton moveDownButton;
@@ -87,6 +96,8 @@ public class GuiViews {
     JButton moveRightButton;
 
     JButton fightButton;
+    JButton saveAndExitButton;
+    JButton backToMapButton;
     JButton runButton;
 
     public GuiViews(GuiController.StartScreenHandler startScreenHandler) {
@@ -113,9 +124,16 @@ public class GuiViews {
         moveDownButtonPanel = new JPanel();
         moveRightButtonPanel = new JPanel();
         fightButtonPanel = new JPanel();
+        saveAndExitButtonPanel = new JPanel();
+        backToMapButtonPanel = new JPanel();
         runButtonPanel = new JPanel();
 
+//        battleResultsPanel = new JPanel();
+//        battleResults = new JTextArea();
+
         fightButton = new JButton("Fight");
+        saveAndExitButton = new JButton("OK");
+        backToMapButton = new JButton("OK");
         runButton = new JButton("Run");
         moveUpButton = new JButton("UP");
         moveDownButton = new JButton("DOWN");
@@ -161,11 +179,20 @@ public class GuiViews {
         titlePanel.setVisible(true);
         choicesPanel.setVisible(true);
 
+
+        moveUpButton.removeActionListener(moveUpHandler);
+        moveDownButton.removeActionListener(moveDownHandler);
+        moveLeftButton.removeActionListener(moveLeftHandler);
+        moveRightButton.removeActionListener(moveRightHandler);
+
         instructionPanel.setVisible(true);
         instructionLabel.setText("What would you like to do?");
 
         heroTypePanel.setVisible(false);
         heroesBackButtonPanel.setVisible(false);
+
+        if (scrollPanel != null)
+            scrollPanel.setVisible(false);
 //        instructionPanel.setVisible(false);
         if (heroesList!=null && heroesBackButtonPanel != null && heroesPlayButtonPanel != null && heroesPanel != null) {
             heroesList.setVisible(false);
@@ -173,6 +200,12 @@ public class GuiViews {
             heroesPlayButtonPanel.setVisible(false);
             heroesPanel.setVisible(false);
         }
+        System.out.println("main");
+        if (resultsScrollPanel != null)
+            resultsScrollPanel.setVisible(false);
+
+        saveAndExitButtonPanel.setVisible(false);
+        enemyStatsPanel.setVisible(false);
     }
 
     public void viewSetUp(GuiController guiControllerObj){
@@ -234,6 +267,8 @@ public class GuiViews {
         titlePanel.setVisible(false);
         choicesPanel.setVisible(false);
 
+
+
         heroesTitlePanel.setBounds(100, 50, 600, 50);
         heroesTitlePanel.setBackground(Color.BLACK);
         heroesTitleLabel.setForeground(Color.WHITE);
@@ -244,6 +279,8 @@ public class GuiViews {
 
         heroTypePanel.setVisible(true);
         instructionPanel.setVisible(true);
+        heroesTitlePanel.setVisible(true);
+        heroesBackButtonPanel.setVisible(true);
 
         heroesBackButtonPanel.setVisible(true);
         instructionLabel.setText("Please Select Your Hero Type");
@@ -306,6 +343,7 @@ public class GuiViews {
         heroesPlayButtonPanel.setVisible(true);
         heroesPanel.setVisible(true);
         heroesTitlePanel.setVisible(true);
+        scrollPanel.setVisible(true);
 
         heroesTitleLabel.setText("AVAILABLE HEROES");
 
@@ -337,6 +375,7 @@ public class GuiViews {
         choicesPanel.setVisible(false);
         instructionPanel.setVisible(false);
 
+        heroesPlayButton.removeActionListener(playGameHandler);
         heroesTitlePanel.setBounds(100, 50, 600, 50);
         heroesTitlePanel.setBackground(Color.BLACK);
         heroesTitleLabel.setForeground(Color.WHITE);
@@ -385,6 +424,7 @@ public class GuiViews {
         heroesTitleLabel.setForeground(Color.WHITE);
         heroesTitleLabel.setFont(titleFont);
 
+        heroesPlayButton.removeActionListener(playGameHandler);
         heroTypePanel.setVisible(false);
         heroesBackButtonPanel.setVisible(false);
         heroesTitlePanel.setVisible(true);
@@ -418,6 +458,7 @@ public class GuiViews {
         heroesPlayButton.addActionListener(playGameHandler);
         heroesPlayButtonPanel.add(heroesPlayButton);
 
+
         heroNamePanel.setBounds(300, 120, 200, 50);
         heroNamePanel.setBackground(Color.BLACK);
         heroName.setFont(generalFont);
@@ -426,7 +467,7 @@ public class GuiViews {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = heroName.getText();
-
+                heroName.removeActionListener(this);
                 if (setUpRan == 0) {
                     HeroesFactory newhero = guiControllerObj.createHero(heroType, name);
                     heroesTitleLabel.setText(name);
@@ -507,9 +548,15 @@ public class GuiViews {
     }
 
     public void playScreen() {
+        moveUpHandler = new MoveUpHandler();
+        moveDownHandler = new MoveDownHandler();
+        moveLeftHandler = new MoveLeftHandler();
+        moveRightHandler = new MoveRightHandler();
+
         mapPanel = new MapPanel(guiControllerObj.setGameHero(gameHero), new FlowLayout(FlowLayout.CENTER));
         activeHero = guiControllerObj.gameHero;
 
+        System.out.println("Game hero: " + activeHero.getHeroName().getName());
 
         confirmHeroNameButtonPanel.setVisible(false);
         heroesPlayButtonPanel.setVisible(false);
@@ -522,6 +569,13 @@ public class GuiViews {
         heroesBackButtonPanel.setVisible(false);
         heroesPlayButtonPanel.setVisible(false);
         heroesPanel.setVisible(false);
+
+        mapPanel.setVisible(true);
+        moveUpButtonPanel.setVisible(true);
+        moveDownButtonPanel.setVisible(true);
+        moveLeftButtonPanel.setVisible(true);
+        moveRightButtonPanel.setVisible(true);
+        gamePlayStatsPanel.setVisible(true);
 
         if (heroesList != null) {
             scrollPanel.setVisible(false);
@@ -551,18 +605,7 @@ public class GuiViews {
         moveUpButton.setFocusPainted(false);
         moveUpButton.setForeground(Color.blue);
         moveUpButton.setActionCommand("up");
-        moveUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                activeHero = guiControllerObj.gameHero;
-                guiControllerObj.movePlayer(e.getActionCommand());
-                updateStats(activeHero);
-                mapPanel.repaint();
-
-                if (guiControllerObj.initMap.metEnemy)
-                    enemyStatsScreen(guiControllerObj.getEnemyStats());
-            }
-        });
+        moveUpButton.addActionListener(moveUpHandler);
         moveUpButtonPanel.add(moveUpButton);
 
         moveDownButtonPanel.setBounds(35, 480, 90, 42);
@@ -571,18 +614,7 @@ public class GuiViews {
         moveDownButton.setFocusPainted(false);
         moveDownButton.setForeground(Color.blue);
         moveDownButton.setActionCommand("down");
-        moveDownButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                activeHero = guiControllerObj.gameHero;
-                guiControllerObj.movePlayer(e.getActionCommand());
-                updateStats(activeHero);
-                mapPanel.repaint();
-
-                if (guiControllerObj.initMap.metEnemy)
-                    enemyStatsScreen(guiControllerObj.getEnemyStats());
-            }
-        });
+        moveDownButton.addActionListener(moveDownHandler);
         moveDownButtonPanel.add(moveDownButton);
 
         moveLeftButtonPanel.setBounds(2, 440, 80, 40);
@@ -591,18 +623,7 @@ public class GuiViews {
         moveLeftButton.setForeground(Color.blue);
         moveLeftButton.setFocusPainted(false);
         moveLeftButton.setActionCommand("left");
-        moveLeftButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                activeHero = guiControllerObj.gameHero;
-                guiControllerObj.movePlayer(e.getActionCommand());
-                updateStats(activeHero);
-                mapPanel.repaint();
-
-                if (guiControllerObj.initMap.metEnemy)
-                    enemyStatsScreen(guiControllerObj.getEnemyStats());
-            }
-        });
+        moveLeftButton.addActionListener(moveLeftHandler);
         moveLeftButtonPanel.add(moveLeftButton);
 
         moveRightButtonPanel.setBounds(80, 440, 85, 40);
@@ -611,18 +632,7 @@ public class GuiViews {
         moveRightButton.setForeground(Color.blue);
         moveRightButton.setFocusPainted(false);
         moveRightButton.setActionCommand("right");
-        moveRightButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                activeHero = guiControllerObj.gameHero;
-                guiControllerObj.movePlayer(e.getActionCommand());
-                updateStats(activeHero);
-                mapPanel.repaint();
-
-                if (guiControllerObj.initMap.metEnemy)
-                    enemyStatsScreen(guiControllerObj.getEnemyStats());
-            }
-        });
+        moveRightButton.addActionListener(moveRightHandler);
         moveRightButtonPanel.add(moveRightButton);
 
         container.add(mapPanel);
@@ -642,6 +652,9 @@ public class GuiViews {
         moveDownButtonPanel.setVisible(false);
         moveLeftButtonPanel.setVisible(false);
         moveRightButtonPanel.setVisible(false);
+        enemyStatsPanel.setVisible(true);
+        fightButtonPanel.setVisible(true);
+        runButtonPanel.setVisible(true);
 
         enemyStats.setForeground(Color.WHITE);
         enemyStats.setBackground(Color.BLUE);
@@ -680,8 +693,11 @@ public class GuiViews {
                 String result = guiControllerObj.fight();
                 switch (result){
                     case "lost":
+                        lostBattleScreen(guiControllerObj.getBattleSimulation());
                         break;
                     case "won":
+                        wonBattleScreen(guiControllerObj.getBattleSimulation());
+                        break;
                 }
 //                activeHero = guiControllerObj.gameHero;
 //                guiControllerObj.movePlayer(e.getActionCommand());
@@ -694,7 +710,7 @@ public class GuiViews {
         });
         fightButtonPanel.add(fightButton);
 
-        enemyStatsPanel.setBounds(2, 50, 200, 340);
+        enemyStatsPanel.setBounds(2, 50, 170, 340);
         enemyStatsPanel.setBackground(Color.BLUE);
         enemyStats.setText("Name       : " + eStats.getAboutEnemy().getName() + "\n"
                                 + "Attack       : " + eStats.getAboutEnemy().getAttack() + "\n"
@@ -710,11 +726,151 @@ public class GuiViews {
         container.add(enemyStatsPanel);
     }
 
+    private void wonBattleScreen(String[] battleSimulation) {
+        battleResultsList = new JList(battleSimulation);
+        resultsScrollPanel = new JScrollPane(battleResultsList);
+
+        mapPanel.setVisible(false);
+        runButtonPanel.setVisible(false);
+        fightButtonPanel.setVisible(false);
+        resultsScrollPanel.setVisible(true);
+        backToMapButtonPanel.setVisible(true);
+        enemyStatsPanel.setVisible(true);
+
+        backToMapButtonPanel.setBounds(35, 480, 90, 42);
+        backToMapButtonPanel.setBackground(Color.BLUE);
+        backToMapButton.setFont(generalFont);
+        backToMapButton.setFocusPainted(false);
+        backToMapButton.setForeground(Color.blue);
+//        saveAndExitButton.setActionCommand("down");
+        backToMapButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultsScrollPanel.setVisible(false);
+                backToMapButtonPanel.setVisible(false);
+
+                updateStats(guiControllerObj.gameHero);
+                mapPanel.setVisible(true);
+                moveUpButtonPanel.setVisible(true);
+                moveDownButtonPanel.setVisible(true);
+                moveLeftButtonPanel.setVisible(true);
+                moveRightButtonPanel.setVisible(true);
+                gamePlayStatsPanel.setVisible(true);
+            }
+        });
+        backToMapButtonPanel.add(backToMapButton);
+
+
+
+        resultsScrollPanel.setBounds(180, 50, 600, 520);
+        battleResultsList.setBounds(180, 50, 600, 520);
+        battleResultsList.setForeground(Color.WHITE);
+        battleResultsList.setBackground(Color.BLUE);
+        battleResultsList.setVisibleRowCount(8);
+        battleResultsList.setEnabled(false);
+        container.add(resultsScrollPanel);
+        container.add(backToMapButtonPanel);
+    }
+
+    private void lostBattleScreen(String[] battleSimulation) {
+
+        battleResultsList = new JList(battleSimulation);
+        resultsScrollPanel = new JScrollPane(battleResultsList);
+
+        mapPanel.setVisible(false);
+        runButtonPanel.setVisible(false);
+        fightButtonPanel.setVisible(false);
+        resultsScrollPanel.setVisible(true);
+        saveAndExitButtonPanel.setVisible(true);
+        enemyStatsPanel.setVisible(true);
+
+        saveAndExitButton.removeActionListener(guiControllerObj.backButtonHandler);
+        saveAndExitButtonPanel.setBounds(35, 480, 90, 42);
+        saveAndExitButtonPanel.setBackground(Color.BLUE);
+        saveAndExitButton.setFont(generalFont);
+        saveAndExitButton.setFocusPainted(false);
+        saveAndExitButton.setForeground(Color.blue);
+//        saveAndExitButton.setActionCommand("down");
+        saveAndExitButton.addActionListener(guiControllerObj.backButtonHandler);
+        saveAndExitButtonPanel.add(saveAndExitButton);
+
+
+
+        resultsScrollPanel.setBounds(180, 50, 600, 520);
+        battleResultsList.setBounds(180, 50, 600, 520);
+        battleResultsList.setForeground(Color.WHITE);
+        battleResultsList.setBackground(Color.BLUE);
+        battleResultsList.setVisibleRowCount(8);
+        battleResultsList.setEnabled(false);
+        container.add(resultsScrollPanel);
+        container.add(saveAndExitButtonPanel);
+    }
+
     private void updateStats(HeroesFactory activeHero){
         gamePlayStats.setText("EXP : " + activeHero.getAboutHero().getExperience() + "\n"
                 + "Weapon : " + activeHero.getStats().getWeapon() + "\n"
                 + "HP : " + activeHero.getAboutHero().getHitPoints() + "\n"
                 + "Level : "+ activeHero.getAboutHero().getLevel() + "\n" + guiControllerObj.initMap.metEnemy
         );
+    }
+
+    private class MoveUpHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            activeHero = guiControllerObj.gameHero;
+            guiControllerObj.movePlayer(e.getActionCommand());
+            updateStats(activeHero);
+            mapPanel.repaint();
+
+            if (guiControllerObj.initMap.metEnemy){
+                enemyStatsScreen(guiControllerObj.getEnemyStats());
+                guiControllerObj.resetMetEnemy();
+            }
+        }
+    }
+
+    private class MoveRightHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            activeHero = guiControllerObj.gameHero;
+            guiControllerObj.movePlayer(e.getActionCommand());
+            updateStats(activeHero);
+            mapPanel.repaint();
+
+            if (guiControllerObj.initMap.metEnemy){
+                enemyStatsScreen(guiControllerObj.getEnemyStats());
+                guiControllerObj.resetMetEnemy();
+            }
+        }
+    }
+
+    private class MoveLeftHandler implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            activeHero = guiControllerObj.gameHero;
+            guiControllerObj.movePlayer(e.getActionCommand());
+            updateStats(activeHero);
+            mapPanel.repaint();
+
+            if (guiControllerObj.initMap.metEnemy){
+                enemyStatsScreen(guiControllerObj.getEnemyStats());
+                guiControllerObj.resetMetEnemy();
+            }
+        }
+    }
+
+    private class MoveDownHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            activeHero = guiControllerObj.gameHero;
+            guiControllerObj.movePlayer(e.getActionCommand());
+            updateStats(activeHero);
+            mapPanel.repaint();
+
+            if (guiControllerObj.initMap.metEnemy){
+                enemyStatsScreen(guiControllerObj.getEnemyStats());
+                guiControllerObj.resetMetEnemy();
+            }
+        }
     }
 }

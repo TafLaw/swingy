@@ -52,6 +52,7 @@ public class MapController {
     private void setMap(HeroesFactory hero) {
         this.heroesFactory = hero;
         initMap = new InitMap(hero.getAboutHero().getLevel());
+
         playerPosition = new PlayerPosition(initMap.getRows(), initMap.getColumns());
         //TODO: Set the player position to the map
         initMap.playerPosition(playerPosition.getPlayerRow(), playerPosition.getPlayerColumn());
