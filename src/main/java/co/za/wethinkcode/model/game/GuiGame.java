@@ -104,4 +104,8 @@ public class GuiGame extends AbGame{
     protected void levelUp() {
 
     }
+
+    public String run() {
+        return runAway(this.mapController);
+    }
 }

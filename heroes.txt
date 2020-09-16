@@ -18,3 +18,6 @@ serdfg,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
 dssdfsd,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
 dxcfv,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
 bnm,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+Saew,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+aAW,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+AWsa,Ronin,1,51,0,88,82,Cutlass,Vambrace,Steel

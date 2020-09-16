@@ -26,6 +26,7 @@ public class GuiController {
     public  AvailableHeroesScreenHandler availableHeroesScreenHandler;
     public PlayGameHandler playGameHandler;
     public  ChoiceHandler choiceHandler;
+    public  DroppedArtifactHandler droppedArtifactHandler;
     private String[] allHeroes;
     private MapController mapController;
     public HeroesFactory gameHero;
@@ -34,6 +35,7 @@ public class GuiController {
     public GuiController(MapController mapController) {
         //play = new GuiGame();
         this.mapController = mapController;
+        droppedArtifactHandler = new DroppedArtifactHandler();
         startScreenHandler = new StartScreenHandler();
         backButtonHandler = new BackButtonHandler();
         availableHeroesScreenHandler = new AvailableHeroesScreenHandler();
@@ -92,6 +94,10 @@ public class GuiController {
         return guiGameObj.createHero(heroType, name);
     }
 
+    public String run(){
+        return guiGameObj.run();
+    }
+
     public EnemiesFactory getEnemyStats() {
         return guiGameObj.metAnEnemy();
     }
@@ -107,6 +113,11 @@ public class GuiController {
 
     public void resetMetEnemy() {
         initMap.metEnemy = false;
+    }
+
+    public void droppedArtifact(){
+        if (guiGameObj.droppedArtifact)
+            guiViews.droppedArtifact();
     }
 
 //    public class moveUpHandler implements ActionListener{
@@ -166,6 +177,21 @@ public class GuiController {
 
             System.out.println("Play once");
             guiViews.playScreen();
+        }
+    }
+
+    public class DroppedArtifactHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (e.getActionCommand()){
+                case "pick":
+                    guiGameObj.pickUpWeapon();
+                    guiViews.leave();
+                    break;
+                case "leave":
+                    guiViews.leave();
+            }
         }
     }
 

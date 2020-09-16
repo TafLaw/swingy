@@ -16,7 +16,7 @@ import java.util.logging.Level;
 public class ConsoleGame extends AbGame {
     public Scanner scanner;
     public static int section;
-    private int chance;
+//    private int chance;
     private boolean gameOver = false;
 //    private int playerRow;
 //    private int playerCol;
@@ -175,19 +175,27 @@ public class ConsoleGame extends AbGame {
 
     private String run(EnemiesFactory enemiesFactory) {
         section = 1;
-        Random random = new Random();
-        int decider = random.nextInt(101);
-        if (decider >= 0 && decider <= 50)
-        {
+        String result = runAway(mapController);
+
+        if (result.equalsIgnoreCase("fight")) {
             this.fight(enemiesFactory);
             return null;
         }
-        else {
-            mapController.playerPosition.setPlayerRow(this.playerRow);
-            mapController.playerPosition.setPlayerColumn(this.playerCol);
-            mapController.resetEnemy(this.playerEnemyRow, this.playerEnemyCol);
+        else
             return "You successfully escaped the enemy";
-        }
+//        Random random = new Random();
+//        int decider = random.nextInt(101);
+//        if (decider >= 0 && decider <= 50)
+//        {
+//            this.fight(enemiesFactory);
+//            return null;
+//        }
+//        else {
+//            mapController.playerPosition.setPlayerRow(this.playerRow);
+//            mapController.playerPosition.setPlayerColumn(this.playerCol);
+//            mapController.resetEnemy(this.playerEnemyRow, this.playerEnemyCol);
+//            return "You successfully escaped the enemy";
+//        }
     }
 
     private void fight(EnemiesFactory enemy) {
@@ -531,19 +539,19 @@ public class ConsoleGame extends AbGame {
 
     }
 
-    public void pickUpWeapon() {
-        switch (chance){
-            case 0:
-                this.increaseAttack(hero);
-                break;
-            case 1:
-                this.increaseDefence(hero);
-                break;
-            case 2:
-                this.increaseHP(hero);
-                break;
-        }
-    }
+//    public void pickUpWeapon() {
+//        switch (chance){
+//            case 0:
+//                this.increaseAttack(hero);
+//                break;
+//            case 1:
+//                this.increaseDefence(hero);
+//                break;
+//            case 2:
+//                this.increaseHP(hero);
+//                break;
+//        }
+//    }
 
     private void clear(){
         System.out.print("\033[H\033[2J");

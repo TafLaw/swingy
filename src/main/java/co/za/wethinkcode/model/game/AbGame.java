@@ -1,5 +1,6 @@
 package co.za.wethinkcode.model.game;
 
+import co.za.wethinkcode.controller.MapController;
 import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.characters.heroes.CreateHero;
@@ -94,6 +95,22 @@ public abstract class AbGame {
     public void saveAndExit() {
         hero.getAboutHero().setHitPoints(heroInitialHP + gainedHP);
         createHero.saveAndExit(hero, heroIndex);
+    }
+
+    protected String runAway(MapController mapController){
+        Random random = new Random();
+        int decider = random.nextInt(101);
+        if (decider >= 0 && decider <= 50)
+        {
+            //this.fightEnemy(enemiesFactory);
+            return "fight";
+        }
+        else {
+            mapController.playerPosition.setPlayerRow(this.playerRow);
+            mapController.playerPosition.setPlayerColumn(this.playerCol);
+            mapController.resetEnemy(this.playerEnemyRow, this.playerEnemyCol);
+            return "run";
+        }
     }
 
     protected String fightEnemy(EnemiesFactory enemy) {
@@ -228,5 +245,19 @@ public abstract class AbGame {
         if (enemyHP < 0)
             enemyHP = 0;
         return enemyHP;
+    }
+
+    public void pickUpWeapon() {
+        switch (chance){
+            case 0:
+                this.increaseAttack(hero);
+                break;
+            case 1:
+                this.increaseDefence(hero);
+                break;
+            case 2:
+                this.increaseHP(hero);
+                break;
+        }
     }
 }
