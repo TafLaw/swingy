@@ -12,6 +12,7 @@ public class InitMap {
     private PlayerPosition playerPosition;
 
     public InitMap(int level) {
+        System.out.println("level "+level);
         this.entry = true;
         this.level = level;
         this.rows = (level-1)*5+10-(level%2);

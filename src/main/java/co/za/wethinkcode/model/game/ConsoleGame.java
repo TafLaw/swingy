@@ -523,6 +523,9 @@ public class ConsoleGame extends AbGame {
         newLevel = false;
         int newLevel = hero.getAboutHero().getLevel() + 1;
 
+        if (newLevel > 7)
+            newLevel = 7;
+
         if (game.canLevelUp(hero)){
             hero.getAboutHero().setLevel(newLevel);
             mapController.updateObjCreated();

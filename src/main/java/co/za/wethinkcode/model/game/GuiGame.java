@@ -15,7 +15,7 @@ import java.util.Random;
 //import static co.za.wethinkcode.model.characters.heroes.HeroType.*;
 
 public class GuiGame extends AbGame{
-    private CreateHero createHero;
+//    private CreateHero createHero;
     private GuiController guiController;
     private HeroStorage heroStorage;
     //private HeroesFactory hero;
@@ -36,8 +36,9 @@ public class GuiGame extends AbGame{
     public void play(CreateHero createHero){
         this.createHero = createHero;
 
+        System.out.println(createHero);
         guiController.startScreen(guiController, this);
-        System.out.println("Gui GamePlay");
+
     }
 
     public ArrayList<String> getSimulationResults(){
@@ -46,16 +47,19 @@ public class GuiGame extends AbGame{
 
     public HeroesFactory storePlayer(String[] hero) {
         this.hero = this.game.storePlayer(hero);
-        System.out.println(this.hero);
+        heroInitialHP = this.hero.getAboutHero().getHitPoints();
         return this.hero;
     }
 
     public void movePlayer(String direction){
+
         game.movePlayer(mapController, this, direction);
+        if (newLevel)
+            levelUp();
     }
 
-    public HeroesFactory getha(){
-        return this.hero;
+    public CreateHero getha(){
+        return this.createHero;
     }
 
     public String[] getAllHeroes(){
@@ -63,8 +67,10 @@ public class GuiGame extends AbGame{
     }
 
     public HeroesFactory createHero(HeroType heroType, String name){
-//        System.out.println(Ninja.ordinal());
+        ArrayList<String> allHeroes = heroStorage.allAvailableHeroes();
         hero = createHero.createHero(name.trim(), CreateHero.heroTypes.get(heroType.ordinal()));
+        heroIndex = allHeroes.size() - 1;
+        heroInitialHP = this.hero.getAboutHero().getHitPoints();
         return hero;
     }
 
@@ -92,7 +98,6 @@ public class GuiGame extends AbGame{
     }
 
     public String fight(EnemiesFactory enemy) {
-        System.out.println("AESR :"+this.hero);
         return fightEnemy(enemy);
     }
 
@@ -103,9 +108,31 @@ public class GuiGame extends AbGame{
     @Override
     protected void levelUp() {
 
+        int newLevel = hero.getAboutHero().getLevel() + 1;
+
+        if (newLevel > 7)
+            newLevel = 7;
+
+        if (game.canLevelUp(hero)){
+            hero.getAboutHero().setLevel(newLevel);
+            mapController.updateObjCreated();
+            saveAndExit();
+//            guiController.backToMap();
+
+        }
+        else this.cantLevelUp();
+    }
+
+    private void cantLevelUp() {
+        guiController.cantLevelUp();
     }
 
     public String run() {
         return runAway(this.mapController);
+    }
+
+    public void save() {
+        this.saveAndExit();
+
     }
 }

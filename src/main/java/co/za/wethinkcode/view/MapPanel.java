@@ -24,6 +24,18 @@ public class MapPanel extends JPanel {
 
     public MapPanel(){}
 
+    public void setMap(InitMap map) {
+        this.map = map;
+    }
+
+    public static void setRows(int rows) {
+        MapPanel.rows = rows;
+    }
+
+    public static void setCols(int cols) {
+        MapPanel.cols = cols;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

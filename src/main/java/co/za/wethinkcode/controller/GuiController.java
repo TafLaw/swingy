@@ -27,6 +27,7 @@ public class GuiController {
     public PlayGameHandler playGameHandler;
     public  ChoiceHandler choiceHandler;
     public  DroppedArtifactHandler droppedArtifactHandler;
+    public SaveAndExitHandler saveAndExitHandler;
     private String[] allHeroes;
     private MapController mapController;
     public HeroesFactory gameHero;
@@ -36,6 +37,7 @@ public class GuiController {
         //play = new GuiGame();
         this.mapController = mapController;
         droppedArtifactHandler = new DroppedArtifactHandler();
+        saveAndExitHandler = new SaveAndExitHandler();
         startScreenHandler = new StartScreenHandler();
         backButtonHandler = new BackButtonHandler();
         availableHeroesScreenHandler = new AvailableHeroesScreenHandler();
@@ -70,7 +72,13 @@ public class GuiController {
     public void movePlayer(String direction){
         System.out.println("move");
         guiGameObj.movePlayer(direction);
-        mapController.mapPanel(this.gameHero);
+        this.initMap = mapController.mapPanel(this.gameHero);
+
+        if (guiGameObj.newLevel){
+            guiGameObj.newLevel = false;
+            backToMap();
+        }
+        System.out.println("Cols: " +initMap.getRows());
     }
 
     public HeroesFactory createHero(String type, String name){
@@ -118,6 +126,18 @@ public class GuiController {
     public void droppedArtifact(){
         if (guiGameObj.droppedArtifact)
             guiViews.droppedArtifact();
+    }
+
+    public void setHeroIndex(int heroIndex) {
+        guiGameObj.setHeroIndex(heroIndex);
+    }
+
+    public void backToMap() {
+        guiViews.rePaint();
+    }
+
+    public void cantLevelUp() {
+        guiViews.cantLevelUpScreen();
     }
 
 //    public class moveUpHandler implements ActionListener{
@@ -192,6 +212,15 @@ public class GuiController {
                 case "leave":
                     guiViews.leave();
             }
+        }
+    }
+
+    public class SaveAndExitHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            guiGameObj.save();
+            guiViews.backToMain();
         }
     }
 

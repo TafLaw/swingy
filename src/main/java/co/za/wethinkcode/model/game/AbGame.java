@@ -31,6 +31,14 @@ public abstract class AbGame {
         return playerRow;
     }
 
+    public void setHeroIndex(int heroIndex) {
+        this.heroIndex = heroIndex;
+    }
+
+    public int getHeroIndex() {
+        return heroIndex;
+    }
+
     public void setPlayerRow(int playerRow) {
         this.playerRow = playerRow;
     }
@@ -93,6 +101,7 @@ public abstract class AbGame {
     protected abstract void levelUp();
 
     public void saveAndExit() {
+        System.out.println("HP: "+ hero.getAboutHero().getHitPoints());
         hero.getAboutHero().setHitPoints(heroInitialHP + gainedHP);
         createHero.saveAndExit(hero, heroIndex);
     }
@@ -124,7 +133,6 @@ public abstract class AbGame {
 
 
 
-        System.out.println("Hero : " + hero);
         String heroWeapon = hero.getStats().getWeapon();
         String enemyWeapon = enemy.getArtifacts().getWeapon();
         System.out.println(hero.getAboutHero().getHitPoints() + " " + enemy.getAboutEnemy().getHitPoints());
