@@ -100,7 +100,7 @@ public class ConsoleGame extends AbGame {
             option = "0";
             this.selectHeroType();
 //            this.running();
-            return;
+//            return;
         }
         else if (check == 2) {
             this.availableHeroes();
@@ -111,6 +111,7 @@ public class ConsoleGame extends AbGame {
             return;
         }
         else System.exit(1);
+        this.play(createHero);
     }
 
     private void switchToGui(CreateHero createHero) {
@@ -121,12 +122,15 @@ public class ConsoleGame extends AbGame {
 
     public void backToMap(){
         this.clear();
+        mapController.updateObjCreated();
         this.running();
     }
     private void running(){
         String message = null;
+        int whereTo = 0;
+        int check = 0;
+
         while (!gameOver) {
-            int check;
             do {
                 try {
                     if (message != null) {
@@ -151,18 +155,35 @@ public class ConsoleGame extends AbGame {
                 }
 
             } while (check < 0 || check > 4);
+//            if (gameOver)
+//                break;
+//
             if (check == 0){
                 mapController.updateObjCreated();
                 saveAndExit();
                 break;
             }
             else {
-                if (!gameOver)
-                    this.movePlayer(direction[check - 1]);
+                if (!gameOver){
+                    whereTo = this.movePlayer(direction[check - 1]);
+                    if (whereTo != 0)
+                        break;
+                    //break;
+                }
+                else  break;
             }
         }
         gameOver = false;
-        this.play(this.createHero);
+        if (whereTo == 1 && check != 0) {
+            whereTo = 0;
+            backToMap();
+            return;
+        }
+//        else if (whereTo == 2){
+//
+//        }
+
+//        this.play(this.createHero);
     }
 
     private String metAnEnemy() {
@@ -363,11 +384,19 @@ public class ConsoleGame extends AbGame {
 //        return enemyHP;
 //    }
 
-    private void movePlayer(String direction){
+    private int movePlayer(String direction){
+        int result = 0;
+        boolean checkLevelUp = false;
 
         game.movePlayer(mapController, this, direction);
-        if (newLevel)
-            levelUp();
+        if (newLevel){
+            checkLevelUp = levelUp();
+            if (checkLevelUp)
+                result = 1;
+            else result = 2;
+        }
+
+        return result;
 //        if (mapController.playerPosition.getPlayerColumn()-1 == playerCol && mapController.playerPosition.getPlayerRow() == playerRow)
 //            levelUp();
 //        int currentRow = mapController.playerPosition.getPlayerRow();
@@ -447,8 +476,6 @@ public class ConsoleGame extends AbGame {
 
         this.clear();
         this.stats();
-
-        this.running();
     }
 
 //    public static void validate(String value) {
@@ -531,14 +558,17 @@ public class ConsoleGame extends AbGame {
             }
         }while (check < 1 || check > 3);
 
-        if (check == 1);
+        if (check == 1)
+            this.running();
         else if(check == 2)
-            this.play(this.createHero);
+            return;
+            //this.play(this.createHero);
         else System.exit(1);
     }
 
-    @Override
-    protected void levelUp() {
+//    @Override
+    protected boolean levelUp() {
+        boolean leveledUp = true;
         newLevel = false;
         int newLevel = hero.getAboutHero().getLevel() + 1;
 
@@ -550,9 +580,14 @@ public class ConsoleGame extends AbGame {
             mapController.updateObjCreated();
             this.clear();
             saveAndExit();
-            backToMap();
+//            leveledUp = true;
+            //backToMap();
         }
-        else this.cantLevelUp();
+        else {
+            leveledUp = false;
+            this.cantLevelUp();
+        }
+        return leveledUp;
     }
 
     private void cantLevelUp() {
