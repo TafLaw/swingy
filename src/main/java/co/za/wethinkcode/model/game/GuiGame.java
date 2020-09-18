@@ -1,5 +1,6 @@
 package co.za.wethinkcode.model.game;
 
+import co.za.wethinkcode.controller.GameController;
 import co.za.wethinkcode.controller.GuiController;
 import co.za.wethinkcode.controller.MapController;
 import co.za.wethinkcode.model.characters.enemies.CreateEnemies;
@@ -26,7 +27,8 @@ public class GuiGame extends AbGame{
     private int playerEnemyRow;
     private int playerEnemyCol;
 
-    public GuiGame(MapController mapController, Game game) {
+    public GuiGame(MapController mapController, Game game, GameController gameController) {
+        this.gameController = gameController;
         this.mapController = mapController;
         guiController = new GuiController(this.mapController);
         heroStorage = new HeroStorage();
@@ -36,7 +38,6 @@ public class GuiGame extends AbGame{
     public void play(CreateHero createHero){
         this.createHero = createHero;
 
-        System.out.println(createHero);
         guiController.startScreen(guiController, this);
 
     }
@@ -69,8 +70,15 @@ public class GuiGame extends AbGame{
     public HeroesFactory createHero(HeroType heroType, String name){
         ArrayList<String> allHeroes = heroStorage.allAvailableHeroes();
         hero = createHero.createHero(name.trim(), CreateHero.heroTypes.get(heroType.ordinal()));
-        heroIndex = allHeroes.size() - 1;
-        heroInitialHP = this.hero.getAboutHero().getHitPoints();
+        if (hero == null) {
+            guiController.showError();
+//            play(this.createHero);
+        }
+        else {
+            heroIndex = allHeroes.size() - 1;
+            heroInitialHP = this.hero.getAboutHero().getHitPoints();
+        }
+
         return hero;
     }
 
@@ -134,5 +142,9 @@ public class GuiGame extends AbGame{
     public void save() {
         this.saveAndExit();
 
+    }
+
+    public void switchToConsole() {
+        gameController.startConsole(this.createHero);
     }
 }

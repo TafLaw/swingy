@@ -2,13 +2,11 @@ package co.za.wethinkcode.controller;
 
 import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
-import co.za.wethinkcode.model.characters.heroes.CreateHero;
 import co.za.wethinkcode.model.characters.heroes.HeroType;
 import co.za.wethinkcode.model.game.GuiGame;
 import co.za.wethinkcode.model.maps.InitMap;
 import co.za.wethinkcode.view.GuiViews;
 
-import javax.swing.plaf.basic.BasicViewportUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class GuiController {
     public StartScreenHandler startScreenHandler;
     public BackButtonHandler backButtonHandler;
     public  AvailableHeroesScreenHandler availableHeroesScreenHandler;
+    public SwitchToConsoleHandler switchToConsoleHandler;
     public PlayGameHandler playGameHandler;
     public  ChoiceHandler choiceHandler;
     public  DroppedArtifactHandler droppedArtifactHandler;
@@ -36,6 +35,7 @@ public class GuiController {
     public GuiController(MapController mapController) {
         //play = new GuiGame();
         this.mapController = mapController;
+        switchToConsoleHandler = new SwitchToConsoleHandler();
         droppedArtifactHandler = new DroppedArtifactHandler();
         saveAndExitHandler = new SaveAndExitHandler();
         startScreenHandler = new StartScreenHandler();
@@ -53,7 +53,7 @@ public class GuiController {
 
     public void startScreen(GuiController guiController, GuiGame guiGame){
         guiGameObj = guiGame;
-        allHeroes = this.getAllHeroes();
+//        allHeroes = this.getAllHeroes();
         guiViews.viewSetUp(guiController);
     }
 
@@ -70,7 +70,6 @@ public class GuiController {
     }
 
     public void movePlayer(String direction){
-        System.out.println("move");
         guiGameObj.movePlayer(direction);
         this.initMap = mapController.mapPanel(this.gameHero);
 
@@ -78,7 +77,6 @@ public class GuiController {
             guiGameObj.newLevel = false;
             backToMap();
         }
-        System.out.println("Cols: " +initMap.getRows());
     }
 
     public HeroesFactory createHero(String type, String name){
@@ -140,6 +138,10 @@ public class GuiController {
         guiViews.cantLevelUpScreen();
     }
 
+    public void showError() {
+        guiViews.error();
+    }
+
 //    public class moveUpHandler implements ActionListener{
 //        @Override
 //        public void actionPerformed(ActionEvent e) {
@@ -167,6 +169,7 @@ public class GuiController {
         @Override
         public void actionPerformed(ActionEvent e) {
             List<String> names = new ArrayList<String>();
+            allHeroes = getAllHeroes();
             for (String hero: allHeroes){
                 names.add(hero.split(",")[0]);
             }
@@ -221,6 +224,15 @@ public class GuiController {
         public void actionPerformed(ActionEvent e) {
             guiGameObj.save();
             guiViews.backToMain();
+        }
+    }
+
+    public class SwitchToConsoleHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            guiViews.closeWindow();
+            guiGameObj.switchToConsole();
         }
     }
 

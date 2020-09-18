@@ -22,12 +22,8 @@ public class Main {
         CreateEnemies createEnemies = new CreateEnemies();
         ValidateArguments validateArguments = new ValidateArguments();
         GameController gameController = new GameController();
-
-        ReadFile readFile = new ReadFile();
-System.out.println("Aasa");
-//                gameController.startConsole(createHero);
         try {
-            readFile.readFromFile("heroes.txt");
+//            readFile.readFromFile("heroes.txt");
             validateArguments.numberOfArgs(args);
 
             createEnemies.createEnemies();

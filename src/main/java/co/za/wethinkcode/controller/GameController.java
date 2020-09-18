@@ -14,8 +14,8 @@ public class GameController {
         //TODO: initalize everything that needs to be
         game = new Game();
         mapController = new MapController();
-        playConsole = new ConsoleGame(mapController, game);
-        playGui = new GuiGame(mapController, game);
+        playConsole = new ConsoleGame(mapController, game, this);
+        playGui = new GuiGame(mapController, game, this);
     }
 
     public void startConsole(CreateHero createHero){

@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 public class HeroStorage {
     private WriteFile writeFile;
+    ReadFile readFile;
     public HeroStorage() {
         writeFile = new WriteFile();
+        readFile = new ReadFile();
     }
 
     public ArrayList<String> allAvailableHeroes(){
+        ReadFile.allHeroes.clear();
+        readFile.readFromFile("heroes.txt");
         return ReadFile.allHeroes;
     }
 
@@ -39,6 +43,8 @@ public class HeroStorage {
 
     public void saveHero(HeroesFactory heroesFactory){
         writeFile.writeToFile(addToHeroesList(heroesFactory));
+//        ReadFile.allHeroes.clear();
+//        readFile.readFromFile("heroes.txt");
     }
 
     public void saveAndExit(HeroesFactory hero, int index) {

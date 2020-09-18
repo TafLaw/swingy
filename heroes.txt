@@ -1,24 +1,10 @@
-Tafadzwa,Ninja,1,8,350,60,56,Ninja Stars,Couter,Sphere
-Sub Zero,Ronin,4,0,0,88,82,Cutlass,Vambrace,Steel
-Bean,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Tafad,Shinobi,3,50,0,70,75,Axe,Pauldron,Rusty
-Tawe,Shinobi,3,0,3600,73,75,Axe,Gauntlet,Sphere
-Test Hero,Ronin,7,60,111500,93,95,Sjambok,Vambrace,Mask
-Teara,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-Samua,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-Qae,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Aqw,Ninja,1,0,0,60,56,Ninja Stars,Couter,Sphere
-Tes,Ninja,1,0,0,60,56,Ninja Stars,Couter,Sphere
-Adain,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Quin,Shinobi,1,50,0,70,75,Axe,Pauldron,Rusty
-grsge,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-sdfgh,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-dsaad,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-serdfg,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-dssdfsd,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-dxcfv,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-bnm,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Saew,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-aAW,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Aqw,Ninja,1,0,0,60,56,Ninja Stars,Couter,Sphere
-xddshdg,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
+Tafadzwa,Ronin,4,53,6700,94,92,Sword,Pauldron,Mask
+Haren,Shinobi,1,50,500,70,75,Axe,Pauldron,Rusty
+awsdf,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+tryu,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+Retss,Samurai,1,40,350,65,62,Sword,Gauntlet,Violet
+Mercy,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
+qwq,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+WERA,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
+QWER,Shinobi,1,50,850,70,75,Axe,Pauldron,Rusty
+Testing,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere

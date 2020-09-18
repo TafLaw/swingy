@@ -1,6 +1,7 @@
 package co.za.wethinkcode.model.game;
 
 import co.za.wethinkcode.controller.ConsoleController;
+import co.za.wethinkcode.controller.GameController;
 import co.za.wethinkcode.controller.MapController;
 import co.za.wethinkcode.model.characters.enemies.CreateEnemies;
 import co.za.wethinkcode.model.characters.factories.*;
@@ -35,8 +36,9 @@ public class ConsoleGame extends AbGame {
     private String[] direction = {"up", "down", "left", "right"};
     private Game game;
 
-    public ConsoleGame(MapController mapController, Game game) {
+    public ConsoleGame(MapController mapController, Game game, GameController gameController) {
         section = 1;
+        this.gameController = gameController;
         scanner = new Scanner(System.in);
         this.mapController = mapController;
         heroStorage = new HeroStorage();
@@ -92,18 +94,29 @@ public class ConsoleGame extends AbGame {
                 check = 0;
                 this.clear();
             }
-        }while (check < 1 || check > 3);
+        }while (check < 1 || check > 4);
 
         if (check == 1) {
             option = "0";
             this.selectHeroType();
-            this.running();
+//            this.running();
+            return;
         }
         else if (check == 2) {
             this.availableHeroes();
             this.running();
         }
+        else if (check == 3){
+            this.switchToGui(createHero);
+            return;
+        }
         else System.exit(1);
+    }
+
+    private void switchToGui(CreateHero createHero) {
+        System.out.println("Switching to gui!");
+        gameController.startGui(createHero);
+        return;
     }
 
     public void backToMap(){
@@ -414,8 +427,10 @@ public class ConsoleGame extends AbGame {
             }
 
         }while (check < 0 || check > 4);
-        if (check == 0)
+        if (check == 0) {
             this.play(this.createHero);
+            return;
+        }
         consoleController.heroName();
         name = scanner.nextLine();
 
@@ -432,6 +447,8 @@ public class ConsoleGame extends AbGame {
 
         this.clear();
         this.stats();
+
+        this.running();
     }
 
 //    public static void validate(String value) {
@@ -470,9 +487,11 @@ public class ConsoleGame extends AbGame {
             this.heroIndex = check - 1;
             if (check == 0)
                 this.play(this.createHero);
-            chosenHero = allHeroes.get(check - 1);
-            this.storePlayer(chosenHero.split(","));
-            heroInitialHP = this.hero.getAboutHero().getHitPoints();
+            else{
+                chosenHero = allHeroes.get(check - 1);
+                this.storePlayer(chosenHero.split(","));
+                heroInitialHP = this.hero.getAboutHero().getHitPoints();
+            }
         }
     }
 

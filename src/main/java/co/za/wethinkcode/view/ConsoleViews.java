@@ -10,7 +10,8 @@ public class ConsoleViews {
 
         System.out.println("1. Create New Hero");
         System.out.println("2. Select Existing Hero");
-        System.out.println("3. Exit\n");
+        System.out.println("3. Switch To Gui");
+        System.out.println("4. Exit\n");
     }
 
     public void consoleHeroType(){

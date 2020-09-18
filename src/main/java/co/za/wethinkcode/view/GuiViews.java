@@ -113,6 +113,7 @@ public class GuiViews {
     JButton backToMapButton;
     JButton runButton;
     private GuiController.SaveAndExitHandler saveAndExitHandler;
+    private GuiController.SwitchToConsoleHandler switchToConsoleHandler;
 
     public GuiViews(GuiController.StartScreenHandler startScreenHandler) {
         this.startScreenHandler = startScreenHandler;
@@ -251,6 +252,7 @@ public class GuiViews {
         this.playGameHandler = guiControllerObj.playGameHandler;
         this.droppedArtifactHandler = guiControllerObj.droppedArtifactHandler;
         this.saveAndExitHandler = guiControllerObj.saveAndExitHandler;
+        this.switchToConsoleHandler = guiControllerObj.switchToConsoleHandler;
 
         window.setSize(800, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -288,6 +290,7 @@ public class GuiViews {
 
         switchToConsoleButton.setForeground(Color.blue);
         switchToConsoleButton.setFont(generalFont);
+        switchToConsoleButton.addActionListener(switchToConsoleHandler);
         switchToConsoleButton.setFocusPainted(false);
 
         choicesPanel.add(createHeroButton);
@@ -509,6 +512,9 @@ public class GuiViews {
                 heroName.removeActionListener(this);
                 if (setUpRan == 0) {
                     HeroesFactory newhero = guiControllerObj.createHero(heroType, name);
+
+                    if (newhero == null)
+                        return;
                     heroesTitleLabel.setText(name);
                     heroName.setEditable(false);
                     heroesPlayButtonPanel.setVisible(true);
@@ -535,6 +541,10 @@ public class GuiViews {
                 String name = heroName.getText();
                 if (setUpRan == 0) {
                     HeroesFactory newhero = guiControllerObj.createHero(heroType, name);
+
+                    if (newhero == null)
+                        return;
+
                     heroesTitleLabel.setText(name);
                     heroName.setEditable(false);
                     heroesPlayButtonPanel.setVisible(true);
@@ -641,7 +651,7 @@ public class GuiViews {
         gamePlayStatsPanel.add(gamePlayStats);
 
         moveUpButtonPanel.setBounds(45, 400, 70, 40);
-        moveUpButtonPanel.setBackground(Color.BLUE);
+        moveUpButtonPanel.setBackground(Color.cyan);
         moveUpButton.setFont(generalFont);
         moveUpButton.setFocusPainted(false);
         moveUpButton.setForeground(Color.blue);
@@ -650,7 +660,7 @@ public class GuiViews {
         moveUpButtonPanel.add(moveUpButton);
 
         moveDownButtonPanel.setBounds(35, 480, 90, 42);
-        moveDownButtonPanel.setBackground(Color.BLUE);
+        moveDownButtonPanel.setBackground(Color.cyan);
         moveDownButton.setFont(generalFont);
         moveDownButton.setFocusPainted(false);
         moveDownButton.setForeground(Color.blue);
@@ -659,7 +669,7 @@ public class GuiViews {
         moveDownButtonPanel.add(moveDownButton);
 
         moveLeftButtonPanel.setBounds(2, 440, 80, 40);
-        moveLeftButtonPanel.setBackground(Color.BLUE);
+        moveLeftButtonPanel.setBackground(Color.cyan);
         moveLeftButton.setFont(generalFont);
         moveLeftButton.setForeground(Color.blue);
         moveLeftButton.setFocusPainted(false);
@@ -668,7 +678,7 @@ public class GuiViews {
         moveLeftButtonPanel.add(moveLeftButton);
 
         moveRightButtonPanel.setBounds(80, 440, 85, 40);
-        moveRightButtonPanel.setBackground(Color.BLUE);
+        moveRightButtonPanel.setBackground(Color.cyan);
         moveRightButton.setFont(generalFont);
         moveRightButton.setForeground(Color.blue);
         moveRightButton.setFocusPainted(false);
@@ -906,12 +916,8 @@ public class GuiViews {
         mapPanel.repaint();
     }
 
-    public void nextLevelRepaint(){
-
-    }
 
     public void cantLevelUpScreen() {
-
         cantLevelUpPanel.setBounds(180, 50, 600, 520);
         cantLevelUpPanel.setBackground(Color.cyan);
         cantLevelUp.setText("You won the Game but\n you do not have enough EXP to level up\n\n Press Exit to continue");
@@ -922,13 +928,33 @@ public class GuiViews {
 
         cantLevelUpPanel.setVisible(true);
 
-        mapPanel.setVisible(false);
-        moveUpButtonPanel.setVisible(false);
-        moveDownButtonPanel.setVisible(false);
-        moveLeftButtonPanel.setVisible(false);
-        moveRightButtonPanel.setVisible(false);
+        if (mapPanel != null){
+            mapPanel.setVisible(false);
+            container.remove(moveDownButtonPanel);
+            container.remove(moveUpButtonPanel);
+            container.remove(moveRightButtonPanel);
+            container.remove(moveLeftButtonPanel);
+            moveUpButtonPanel.setVisible(false);
+            moveDownButtonPanel.setVisible(false);
+            moveLeftButtonPanel.setVisible(false);
+            moveRightButtonPanel.setVisible(false);
+
+        }
+
+        moveUpButton.removeActionListener(moveUpHandler);
+        moveDownButton.removeActionListener(moveDownHandler);
+        moveLeftButton.removeActionListener(moveLeftHandler);
+        moveRightButton.removeActionListener(moveRightHandler);
 
         container.add(cantLevelUpPanel);
+    }
+
+    public void error() {
+        JOptionPane.showMessageDialog(window, "Hero Name should be between 3-15 characters long");
+    }
+
+    public void closeWindow() {
+        window.dispose();
     }
 
     private class MoveUpHandler implements ActionListener {

@@ -1,5 +1,6 @@
 package co.za.wethinkcode.model.game;
 
+import co.za.wethinkcode.controller.GameController;
 import co.za.wethinkcode.controller.MapController;
 import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class AbGame {
+    protected GameController gameController;
     protected static ArrayList<String> battleSimulation = new ArrayList<String>();
     protected int playerRow;
     protected int playerCol;
