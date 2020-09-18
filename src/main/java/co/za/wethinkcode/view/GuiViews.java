@@ -203,6 +203,11 @@ public class GuiViews {
         titlePanel.setVisible(true);
         choicesPanel.setVisible(true);
 
+        try{
+            container.remove(scrollPanel);
+        }catch (Exception e){
+            System.out.println("No heroes List");
+        }
 
         if (mapPanel != null){
             mapPanel.setVisible(false);
@@ -236,7 +241,6 @@ public class GuiViews {
             heroesPlayButtonPanel.setVisible(false);
             heroesPanel.setVisible(false);
         }
-        System.out.println("main");
         if (resultsScrollPanel != null)
             resultsScrollPanel.setVisible(false);
 
