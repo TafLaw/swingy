@@ -100,7 +100,7 @@ public abstract class AbGame {
         hero.getStats().setHelm(theVillain.getArtifacts().getHelm());
     }
 
-    protected abstract void levelUp();
+//    protected abstract boolean levelUp();
 
     public void saveAndExit() {
         System.out.println("HP: "+ hero.getAboutHero().getHitPoints());
