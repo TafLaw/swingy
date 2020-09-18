@@ -113,7 +113,7 @@ public class GuiGame extends AbGame{
         return theVillain;
     }
 
-    @Override
+//    @Override
     protected void levelUp() {
 
         int newLevel = hero.getAboutHero().getLevel() + 1;
@@ -145,6 +145,7 @@ public class GuiGame extends AbGame{
     }
 
     public void switchToConsole() {
+        mapController.updateObjCreated();
         gameController.startConsole(this.createHero);
     }
 }
