@@ -87,14 +87,14 @@ public class ConsoleController {
             option = scanner.nextLine();
         }
 
-        consoleGameObj.backToMap();
+        //consoleGameObj.backToMap();
     }
 
     public void cantLevelUp() {
         consoleViews.cantLevelUp();
         option = scanner.nextLine();
         consoleGameObj.saveAndExit();
-        consoleGameObj.backToMain();
+        //consoleGameObj.backToMain();
     }
 
 //    public void startConsole(CreateHero createHero){
