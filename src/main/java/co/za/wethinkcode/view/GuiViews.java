@@ -54,9 +54,9 @@ public class GuiViews {
     JTextArea cantLevelUp;
     JPanel choicesPanel;
     JPanel heroTypePanel;
-    JButton createHeroButton;
-    JButton availableHeroesButton;
-    JButton switchToConsoleButton;
+    public JButton createHeroButton;
+    public JButton availableHeroesButton;
+    public JButton switchToConsoleButton;
     JButton type1, type2, type3, type4;
     GuiController guiControllerObj;
     GuiController.StartScreenHandler startScreenHandler;
@@ -194,6 +194,10 @@ public class GuiViews {
             System.out.println("No heroes List");
         }
 
+        availableHeroesButton.removeActionListener(availableHeroesScreenHandler);
+        switchToConsoleButton.removeActionListener(switchToConsoleHandler);
+        createHeroButton.removeActionListener(startScreenHandler);
+
         if (mapPanel != null){
             mapPanel.setVisible(false);
             moveUpButtonPanel.setVisible(false);
@@ -209,6 +213,10 @@ public class GuiViews {
             moveRightButton.removeActionListener(moveRightHandler);
 
         }
+
+        createHeroButton.addActionListener(startScreenHandler);
+        availableHeroesButton.addActionListener(availableHeroesScreenHandler);
+        switchToConsoleButton.addActionListener(switchToConsoleHandler);
 
         cantLevelUpPanel.setVisible(false);
         instructionPanel.setVisible(true);
@@ -365,6 +373,10 @@ public class GuiViews {
         heroesList = new JList(names);
         scrollPanel = new JScrollPane(heroesList);
 
+        availableHeroesButton.removeActionListener(availableHeroesScreenHandler);
+        switchToConsoleButton.removeActionListener(switchToConsoleHandler);
+        createHeroButton.removeActionListener(startScreenHandler);
+
         scrollPanel.setVisible(true);
         heroesBackButtonPanel.setVisible(true);
         heroesPlayButtonPanel.setVisible(false);
@@ -383,16 +395,21 @@ public class GuiViews {
         heroesList.setBackground(Color.lightGray);
         heroesList.setForeground(new Color(11, 19, 117));
         heroesList.addListSelectionListener(e -> {
-            int selected = heroesList.getSelectedIndex();
-            String[] hero = allHeroes[selected].toString().split(",");
-            gameHero = hero;
-            heroesTitleLabel.setText(hero[0]);
-            guiControllerObj.setHeroIndex(selected);
-            heroStats.setText("Name: "+hero[0]
-                            + "\nType : " + hero[1] + "\nLevel : " + hero[2] + "\nHP : " + hero[3] + "\nExperience : " + hero[4]
-                            + "\nDefence : " + hero[5] + "\nAttack : " + hero[6] + "\nArmor : " + hero[7] + "\nWeapon : " + hero[8]
-            );
-            heroesPlayButtonPanel.setVisible(true);
+            try{
+                int selected = heroesList.getSelectedIndex();
+                String[] hero = allHeroes[selected].toString().split(",");
+                gameHero = hero;
+                heroesTitleLabel.setText(hero[0]);
+                guiControllerObj.setHeroIndex(selected);
+                heroStats.setText("Name: "+hero[0]
+                                + "\nType : " + hero[1] + "\nLevel : " + hero[2] + "\nHP : " + hero[3] + "\nExperience : " + hero[4]
+                                + "\nDefence : " + hero[5] + "\nAttack : " + hero[6] + "\nArmor : " + hero[7] + "\nWeapon : " + hero[8]
+
+                );
+                heroesPlayButtonPanel.setVisible(true);
+            } catch (Exception ex) {
+                System.out.println("Index out of bound");
+            }
         });
 
 
