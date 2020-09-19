@@ -2,19 +2,13 @@ package co.za.wethinkcode.view;
 
 
 import co.za.wethinkcode.controller.GuiController;
-import co.za.wethinkcode.controller.MapController;
 import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
-import org.hibernate.validator.constraints.Range;
 
 import javax.swing.*;
-//import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class GuiViews {
     JFrame window;
@@ -24,8 +18,6 @@ public class GuiViews {
 
     private String[] gameHero;
     private static int setUpRan=0;
-//    @NotEmpty(message = "This field can not be blank")
-    //@Range(min = 3, max = 8, message = "Hero name should have 3 to 8 characters")
     JTextField heroName;
     JPanel heroNamePanel;
     JPanel confirmHeroNameButtonPanel;
@@ -92,7 +84,6 @@ public class GuiViews {
     JPanel backToMapButtonPanel;
     JPanel runButtonPanel;
     JList battleResultsList;
-//    JTextArea battleResults;
     MoveUpHandler moveUpHandler;
     MoveRightHandler moveRightHandler;
     MoveLeftHandler moveLeftHandler;
@@ -118,9 +109,6 @@ public class GuiViews {
     public GuiViews(GuiController.StartScreenHandler startScreenHandler) {
         this.startScreenHandler = startScreenHandler;
         window = new JFrame("Swingy");
-
-//        startScreenHandler = new StartScreenHandler();
-
 
         titlePanel = new JPanel();
         titleLabel = new JLabel("GAME PLAY!");
@@ -148,9 +136,6 @@ public class GuiViews {
         cantLevelUpPanel = new JPanel();
         cantLevelUp = new JTextArea();
         fightRunHandler = new FightRunHandler();
-
-//        battleResultsPanel = new JPanel();
-//        battleResults = new JTextArea();
 
         leaveButton = new JButton("Leave");
         pickItemButton = new JButton("Pick");
@@ -234,7 +219,6 @@ public class GuiViews {
 
         if (scrollPanel != null)
             scrollPanel.setVisible(false);
-//        instructionPanel.setVisible(false);
         if (heroesList!=null && heroesBackButtonPanel != null && heroesPlayButtonPanel != null && heroesPanel != null) {
             heroesList.setVisible(false);
             heroesBackButtonPanel.setVisible(false);
@@ -260,27 +244,27 @@ public class GuiViews {
 
         window.setSize(800, 800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().setBackground(Color.cyan);
+        window.getContentPane().setBackground(Color.gray);
         window.setLayout(null);
         window.setVisible(true);
 
         container = window.getContentPane();
         titlePanel.setBounds(100, 50, 600, 50);
-        titlePanel.setBackground(Color.BLACK);
-        titleLabel.setForeground(Color.WHITE);
+        titlePanel.setBackground(Color.gray);
+        titleLabel.setForeground(new Color(11, 19, 117));
         titleLabel.setFont(titleFont);
         titlePanel.add(titleLabel);
 
         instructionPanel.setBounds(250, 150, 200, 40);
-        instructionPanel.setBackground(Color.BLACK);
-        instructionLabel.setForeground(Color.WHITE);
+        instructionPanel.setBackground(Color.gray);
+        instructionLabel.setForeground(new Color(11, 19, 117));
         instructionLabel.setFont(generalFont);
         instructionPanel.add(instructionLabel);
 
 
 
         choicesPanel.setBounds(250, 250, 300, 100);
-        choicesPanel.setBackground(Color.BLACK);
+        choicesPanel.setBackground(Color.gray);
 
         createHeroButton.setForeground(Color.blue);
         createHeroButton.setFont(generalFont);
@@ -314,8 +298,8 @@ public class GuiViews {
 
 
         heroesTitlePanel.setBounds(100, 50, 600, 50);
-        heroesTitlePanel.setBackground(Color.BLACK);
-        heroesTitleLabel.setForeground(Color.WHITE);
+        heroesTitlePanel.setBackground(Color.gray);
+        heroesTitleLabel.setForeground(new Color(11, 19, 117));
         heroesTitleLabel.setFont(titleFont);
         heroesTitleLabel.setText("HERO TYPE");
         heroesTitlePanel.add(heroesTitleLabel);
@@ -330,7 +314,7 @@ public class GuiViews {
         instructionLabel.setText("Please Select Your Hero Type");
 
         heroTypePanel.setBounds(250, 250, 300, 150);
-        heroTypePanel.setBackground(Color.BLACK);
+        heroTypePanel.setBackground(Color.gray);
 
         type1.setForeground(Color.blue);
         type1.setFocusPainted(false);
@@ -363,7 +347,7 @@ public class GuiViews {
         heroTypePanel.setLayout(new GridLayout(4, 1));
 
         heroesBackButtonPanel.setBounds(250, 420, 70, 40);
-        heroesBackButtonPanel.setBackground(Color.BLUE);
+        heroesBackButtonPanel.setBackground(Color.gray);
         heroesBackButton.setForeground(Color.blue);
         heroesBackButton.setFont(generalFont);
         heroesBackButton.setFocusPainted(false);
@@ -375,16 +359,15 @@ public class GuiViews {
         container.add(heroesBackButtonPanel);
     }
 
-    public void availableHeroesScreen(@NotNull(message = "There are no Heroes available") String[] allHeroes, String[] names){
+    public void availableHeroesScreen(String[] allHeroes, String[] names){
 
 
         heroesList = new JList(names);
         scrollPanel = new JScrollPane(heroesList);
 
-//        heroesList.setVisible(true);
         scrollPanel.setVisible(true);
         heroesBackButtonPanel.setVisible(true);
-        heroesPlayButtonPanel.setVisible(true);
+        heroesPlayButtonPanel.setVisible(false);
         heroesPanel.setVisible(true);
         heroesTitlePanel.setVisible(true);
         scrollPanel.setVisible(true);
@@ -393,26 +376,23 @@ public class GuiViews {
 
         heroesPanel.setAutoscrolls(true);
         heroesList.setVisibleRowCount(8);
-//        heroesList.setFont(generalFont);
-//        heroesList.setAutoscrolls(true);
         heroesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         heroesList.setBounds(100, 120, 400, 350);
         scrollPanel.setBounds(100, 120, 400, 350);
 
-        heroesList.setBackground(Color.red);
-        heroesList.setForeground(Color.WHITE);
+        heroesList.setBackground(Color.lightGray);
+        heroesList.setForeground(new Color(11, 19, 117));
         heroesList.addListSelectionListener(e -> {
             int selected = heroesList.getSelectedIndex();
-//            String[] hero = heroesList.getSelectedValue().toString().split(",");
             String[] hero = allHeroes[selected].toString().split(",");
             gameHero = hero;
             heroesTitleLabel.setText(hero[0]);
-            System.out.println("SELECTED: "+ selected);
             guiControllerObj.setHeroIndex(selected);
             heroStats.setText("Name: "+hero[0]
                             + "\nType : " + hero[1] + "\nLevel : " + hero[2] + "\nHP : " + hero[3] + "\nExperience : " + hero[4]
                             + "\nDefence : " + hero[5] + "\nAttack : " + hero[6] + "\nArmor : " + hero[7] + "\nWeapon : " + hero[8]
             );
+            heroesPlayButtonPanel.setVisible(true);
         });
 
 
@@ -423,22 +403,21 @@ public class GuiViews {
 
         heroesPlayButton.removeActionListener(playGameHandler);
         heroesTitlePanel.setBounds(100, 50, 600, 50);
-        heroesTitlePanel.setBackground(Color.BLACK);
-        heroesTitleLabel.setForeground(Color.WHITE);
+        heroesTitlePanel.setBackground(Color.gray);
+        heroesTitleLabel.setForeground(new Color(11, 19, 117));
         heroesTitleLabel.setFont(titleFont);
 
-//        heroStats.setBounds(10,200,60,20);
-        heroStats.setBackground(Color.BLUE);
-        heroStats.setForeground(Color.WHITE);
+        heroStats.setBackground(Color.lightGray);
+        heroStats.setForeground(new Color(11, 19, 117));
         heroStats.setFont(generalFont);
         heroStats.setEditable(false);
 
         heroesPanel.setBounds(510, 120, 200, 350);
-        heroesPanel.setBackground(Color.BLUE);
+        heroesPanel.setBackground(Color.lightGray);
         heroesPanel.add(heroStats);
 
         heroesBackButtonPanel.setBounds(100, 475, 70, 40);
-        heroesBackButtonPanel.setBackground(Color.BLUE);
+        heroesBackButtonPanel.setBackground(Color.gray);
         heroesBackButton.setForeground(Color.blue);
         heroesBackButton.setFocusPainted(false);
         heroesBackButton.setFont(generalFont);
@@ -446,7 +425,7 @@ public class GuiViews {
         heroesBackButtonPanel.add(heroesBackButton);
 
         heroesPlayButtonPanel.setBounds(510, 475, 70, 40);
-        heroesPlayButtonPanel.setBackground(Color.BLUE);
+        heroesPlayButtonPanel.setBackground(Color.gray);
         heroesPlayButton.setForeground(Color.blue);
         heroesPlayButton.setFont(generalFont);
         heroesPlayButton.addActionListener(playGameHandler);
@@ -464,10 +443,9 @@ public class GuiViews {
 
 
     public void heroNameScreen(String heroType) {
-//        String heroName;
         heroesTitlePanel.setBounds(100, 50, 600, 50);
-        heroesTitlePanel.setBackground(Color.BLACK);
-        heroesTitleLabel.setForeground(Color.WHITE);
+        heroesTitlePanel.setBackground(Color.gray);
+        heroesTitleLabel.setForeground(new Color(11, 19, 117));
         heroesTitleLabel.setFont(titleFont);
 
         heroesPlayButton.removeActionListener(playGameHandler);
@@ -482,14 +460,14 @@ public class GuiViews {
         confirmHeroNameButtonPanel.setVisible(true);
         backToHeroTypesPanel.setVisible(true);
 
-        createdheroStats.setForeground(Color.WHITE);
-        createdheroStats.setBackground(Color.BLUE);
+        createdheroStats.setForeground(new Color(11, 19, 117));
+        createdheroStats.setBackground(Color.lightGray);
         createdheroStats.setFont(generalFont);
         createdheroStats.setEditable(false);
 
         createdheroesPanel.setBounds(300, 165, 270, 340);
-        createdheroesPanel.setBackground(Color.BLUE);
-        createdheroesPanel.setForeground(Color.BLUE);
+        createdheroesPanel.setBackground(Color.lightGray);
+        createdheroesPanel.setForeground(new Color(11, 19, 117));
         createdheroesPanel.add(createdheroStats);
 
         heroesTitleLabel.setText("Give your Hero a name");
@@ -497,7 +475,7 @@ public class GuiViews {
 
 
         heroesPlayButtonPanel.setBounds(500, 515, 70, 40);
-        heroesPlayButtonPanel.setBackground(Color.BLACK);
+        heroesPlayButtonPanel.setBackground(Color.gray);
         heroesPlayButton.setForeground(Color.blue);
         heroesPlayButton.setFont(generalFont);
         heroesPlayButton.setFocusPainted(false);
@@ -506,7 +484,7 @@ public class GuiViews {
 
 
         heroNamePanel.setBounds(300, 120, 200, 50);
-        heroNamePanel.setBackground(Color.BLACK);
+        heroNamePanel.setBackground(Color.gray);
         heroName.setFont(generalFont);
         heroName.setBounds(100, 250, 100, 50);
         heroName.addActionListener(new ActionListener() {
@@ -535,7 +513,7 @@ public class GuiViews {
         heroNamePanel.add(heroName);
 
         confirmHeroNameButtonPanel.setBounds(500, 120, 70, 40);
-        confirmHeroNameButtonPanel.setBackground(Color.BLACK);
+        confirmHeroNameButtonPanel.setBackground(Color.gray);
         confirmHeroNameButton.setForeground(Color.blue);
         confirmHeroNameButton.setFont(generalFont);
         confirmHeroNameButton.setFocusPainted(false);
@@ -554,7 +532,6 @@ public class GuiViews {
                     heroesPlayButtonPanel.setVisible(true);
 
                     gameHero = guiControllerObj.heroToString(newhero).split(",");
-                    //System.out.println(gameHero);
                     createdheroStats.setText("Name: " + newhero.getHeroName().getName()
                             + "\nType : " + newhero.getHeroName().getType() + "\nLevel : " + newhero.getAboutHero().getLevel() + "\nHP : " + newhero.getAboutHero().getHitPoints() + "\nEXP : " + newhero.getAboutHero().getExperience()
                             + "\nDefence : " + newhero.getAboutHero().getDefence() + "\nAttack : " + newhero.getAboutHero().getAttack() + "\nArmor : " + newhero.getStats().getArmor() + "\nWeapon : " + newhero.getStats().getWeapon()
@@ -566,7 +543,7 @@ public class GuiViews {
         confirmHeroNameButtonPanel.add(confirmHeroNameButton);
 
         backToHeroTypesPanel.setBounds(300, 515, 70, 40);
-        backToHeroTypesPanel.setBackground(Color.BLACK);
+        backToHeroTypesPanel.setBackground(Color.gray);
         backToHeroTypesButton.setForeground(Color.blue);
         backToHeroTypesButton.setFocusPainted(false);
         backToHeroTypesButton.setFont(generalFont);
@@ -580,7 +557,6 @@ public class GuiViews {
                 heroesPlayButtonPanel.setVisible(false);
                 heroTypePanel.setVisible(true);
                 heroesBackButtonPanel.setVisible(true);
-//                heroesTitlePanel.setVisible(false);
                 heroesTitleLabel.setText("HERO TYPE");
                 instructionPanel.setVisible(true);
                 createdheroesPanel.setVisible(false);
@@ -609,8 +585,6 @@ public class GuiViews {
         mapPanel = new MapPanel(guiControllerObj.setGameHero(gameHero), new FlowLayout(FlowLayout.CENTER));
         activeHero = guiControllerObj.gameHero;
 
-        System.out.println("Game hero: " + activeHero.getHeroName().getName());
-
         confirmHeroNameButtonPanel.setVisible(false);
         heroesPlayButtonPanel.setVisible(false);
         backToHeroTypesPanel.setVisible(false);
@@ -638,24 +612,24 @@ public class GuiViews {
         }
 
         mapPanel.setBounds(180, 50, 600, 520);
-        mapPanel.setBackground(Color.cyan);
+        mapPanel.setBackground(Color.gray);
 
-        gamePlayStats.setForeground(Color.WHITE);
-        gamePlayStats.setBackground(Color.BLUE);
+        gamePlayStats.setForeground(new Color(11, 19, 117));
+        gamePlayStats.setBackground(Color.lightGray);
         gamePlayStats.setFont(generalFont);
         gamePlayStats.setEditable(false);
 
         gamePlayStatsPanel.setBounds(2, 50, 200, 340);
-        gamePlayStatsPanel.setBackground(Color.BLUE);
+        gamePlayStatsPanel.setBackground(Color.lightGray);
         gamePlayStats.setText("EXP : " + activeHero.getAboutHero().getExperience() + "\n"
                         + "Weapon : " + activeHero.getStats().getWeapon() + "\n"
                         + "HP : " + activeHero.getAboutHero().getHitPoints() + "\n"
-                        + "Level : "+ activeHero.getAboutHero().getLevel() + "\n" + guiControllerObj.initMap.metEnemy
+                        + "Level : "+ activeHero.getAboutHero().getLevel()
                 );
         gamePlayStatsPanel.add(gamePlayStats);
 
         moveUpButtonPanel.setBounds(45, 400, 70, 40);
-        moveUpButtonPanel.setBackground(Color.cyan);
+        moveUpButtonPanel.setBackground(Color.gray);
         moveUpButton.setFont(generalFont);
         moveUpButton.setFocusPainted(false);
         moveUpButton.setForeground(Color.blue);
@@ -664,7 +638,7 @@ public class GuiViews {
         moveUpButtonPanel.add(moveUpButton);
 
         moveDownButtonPanel.setBounds(35, 480, 90, 42);
-        moveDownButtonPanel.setBackground(Color.cyan);
+        moveDownButtonPanel.setBackground(Color.gray);
         moveDownButton.setFont(generalFont);
         moveDownButton.setFocusPainted(false);
         moveDownButton.setForeground(Color.blue);
@@ -673,7 +647,7 @@ public class GuiViews {
         moveDownButtonPanel.add(moveDownButton);
 
         moveLeftButtonPanel.setBounds(2, 440, 80, 40);
-        moveLeftButtonPanel.setBackground(Color.cyan);
+        moveLeftButtonPanel.setBackground(Color.gray);
         moveLeftButton.setFont(generalFont);
         moveLeftButton.setForeground(Color.blue);
         moveLeftButton.setFocusPainted(false);
@@ -682,7 +656,7 @@ public class GuiViews {
         moveLeftButtonPanel.add(moveLeftButton);
 
         moveRightButtonPanel.setBounds(80, 440, 85, 40);
-        moveRightButtonPanel.setBackground(Color.cyan);
+        moveRightButtonPanel.setBackground(Color.gray);
         moveRightButton.setFont(generalFont);
         moveRightButton.setForeground(Color.blue);
         moveRightButton.setFocusPainted(false);
@@ -691,7 +665,7 @@ public class GuiViews {
         moveRightButtonPanel.add(moveRightButton);
 
         saveAndExitButtonPanel.setBounds(35, 540, 85, 42);
-        saveAndExitButtonPanel.setBackground(Color.BLUE);
+        saveAndExitButtonPanel.setBackground(Color.gray);
         saveAndExitButton.setFont(generalFont);
         saveAndExitButton.setForeground(Color.blue);
         saveAndExitButton.setFocusPainted(false);
@@ -707,7 +681,6 @@ public class GuiViews {
         container.add(gamePlayStatsPanel);
         container.add(saveAndExitButtonPanel);
 
-//        if (guiControllerObj.initMap)
     }
 
     private void enemyStatsScreen(EnemiesFactory eStats) {
@@ -724,13 +697,13 @@ public class GuiViews {
         fightButtonPanel.setVisible(true);
         runButtonPanel.setVisible(true);
 
-        enemyStats.setForeground(Color.WHITE);
-        enemyStats.setBackground(Color.BLUE);
+        enemyStats.setForeground(new Color(11, 19, 117));
+        enemyStats.setBackground(Color.lightGray);
         enemyStats.setFont(generalFont);
         enemyStats.setEditable(false);
 
         runButtonPanel.setBounds(80, 440, 85, 40);
-        runButtonPanel.setBackground(Color.BLUE);
+        runButtonPanel.setBackground(Color.gray);
         runButton.setFont(generalFont);
         runButton.setForeground(Color.blue);
         runButton.setFocusPainted(false);
@@ -739,7 +712,7 @@ public class GuiViews {
 
         fightButtonPanel.setBounds(2, 440, 80, 40);
         runButton.addActionListener(fightRunHandler);
-        fightButtonPanel.setBackground(Color.BLUE);
+        fightButtonPanel.setBackground(Color.gray);
         fightButton.setFont(generalFont);
         fightButton.setForeground(Color.blue);
         fightButton.setFocusPainted(false);
@@ -748,7 +721,7 @@ public class GuiViews {
         fightButtonPanel.add(fightButton);
 
         enemyStatsPanel.setBounds(2, 50, 170, 340);
-        enemyStatsPanel.setBackground(Color.BLUE);
+        enemyStatsPanel.setBackground(Color.lightGray);
         enemyStats.setText("Name       : " + eStats.getAboutEnemy().getName() + "\n"
                                 + "Attack       : " + eStats.getAboutEnemy().getAttack() + "\n"
                                 + "Defence   : " + eStats.getAboutEnemy().getDefence() + "\n"
@@ -778,11 +751,10 @@ public class GuiViews {
         guiControllerObj.droppedArtifact();
 
         backToMapButtonPanel.setBounds(35, 480, 90, 42);
-        backToMapButtonPanel.setBackground(Color.BLUE);
+        backToMapButtonPanel.setBackground(Color.gray);
         backToMapButton.setFont(generalFont);
         backToMapButton.setFocusPainted(false);
         backToMapButton.setForeground(Color.blue);
-//        okButton.setActionCommand("down");
         backToMapButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -803,8 +775,8 @@ public class GuiViews {
 
         resultsScrollPanel.setBounds(180, 50, 600, 520);
         battleResultsList.setBounds(180, 50, 600, 520);
-        battleResultsList.setForeground(Color.WHITE);
-        battleResultsList.setBackground(Color.BLUE);
+        battleResultsList.setForeground(new Color(11, 19, 117));
+        battleResultsList.setBackground(Color.white);
         battleResultsList.setVisibleRowCount(8);
         battleResultsList.setEnabled(false);
         container.add(resultsScrollPanel);
@@ -818,10 +790,8 @@ public class GuiViews {
         pickItemButton.removeActionListener(droppedArtifactHandler);
         leaveButton.removeActionListener(droppedArtifactHandler);
 
-
-
         pickItemButtonPanel.setBounds(45, 400, 70, 40);
-        pickItemButtonPanel.setBackground(Color.BLUE);
+        pickItemButtonPanel.setBackground(Color.gray);
         pickItemButton.setFont(generalFont);
         pickItemButton.setFocusPainted(false);
         pickItemButton.setForeground(Color.blue);
@@ -830,7 +800,7 @@ public class GuiViews {
         pickItemButtonPanel.add(pickItemButton);
 
         leaveButtonPanel.setBounds(35, 480, 90, 42);
-        leaveButtonPanel.setBackground(Color.BLUE);
+        leaveButtonPanel.setBackground(Color.gray);
         leaveButton.setFont(generalFont);
         leaveButton.setFocusPainted(false);
         leaveButton.setForeground(Color.blue);
@@ -874,20 +844,18 @@ public class GuiViews {
 
         okButton.removeActionListener(guiControllerObj.backButtonHandler);
         okButtonPanel.setBounds(35, 480, 90, 42);
-        okButtonPanel.setBackground(Color.BLUE);
+        okButtonPanel.setBackground(Color.gray);
         okButton.setFont(generalFont);
         okButton.setFocusPainted(false);
         okButton.setForeground(Color.blue);
-//        okButton.setActionCommand("down");
         okButton.addActionListener(guiControllerObj.backButtonHandler);
         okButtonPanel.add(okButton);
 
-
-
         resultsScrollPanel.setBounds(180, 50, 600, 520);
+        resultsScrollPanel.setForeground(new Color(11, 19, 117));
         battleResultsList.setBounds(180, 50, 600, 520);
-        battleResultsList.setForeground(Color.WHITE);
-        battleResultsList.setBackground(Color.BLUE);
+        battleResultsList.setBackground(Color.white);
+        battleResultsList.setForeground(new Color(11, 19, 117));
         battleResultsList.setVisibleRowCount(8);
         battleResultsList.setEnabled(false);
         container.add(resultsScrollPanel);
@@ -898,7 +866,7 @@ public class GuiViews {
         gamePlayStats.setText("EXP : " + activeHero.getAboutHero().getExperience() + "\n"
                 + "Weapon : " + activeHero.getStats().getWeapon() + "\n"
                 + "HP : " + activeHero.getAboutHero().getHitPoints() + "\n"
-                + "Level : "+ activeHero.getAboutHero().getLevel() + "\n" + guiControllerObj.initMap.metEnemy
+                + "Level : "+ activeHero.getAboutHero().getLevel()
         );
     }
 
@@ -923,9 +891,10 @@ public class GuiViews {
 
     public void cantLevelUpScreen() {
         cantLevelUpPanel.setBounds(180, 50, 600, 520);
-        cantLevelUpPanel.setBackground(Color.cyan);
+        cantLevelUpPanel.setBackground(Color.gray);
         cantLevelUp.setText("You won the Game but\n you do not have enough EXP to level up\n\n Press Exit to continue");
-        cantLevelUp.setForeground(Color.black);
+        cantLevelUp.setForeground(new Color(11, 19, 117));
+        cantLevelUp.setBackground(Color.gray);
         cantLevelUp.setFont(titleFont);
         cantLevelUp.setEditable(false);
         cantLevelUpPanel.add(cantLevelUp);
