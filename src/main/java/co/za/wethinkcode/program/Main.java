@@ -1,20 +1,11 @@
 package co.za.wethinkcode.program;
 
-import co.za.wethinkcode.controller.ConsoleController;
 import co.za.wethinkcode.controller.GameController;
-import co.za.wethinkcode.controller.GuiController;
 import co.za.wethinkcode.exceptions.InvalidArgsException;
 import co.za.wethinkcode.exceptions.ValidateArguments;
-import co.za.wethinkcode.model.characters.enemies.AboutEnemy;
 import co.za.wethinkcode.model.characters.enemies.CreateEnemies;
-import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
-import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.characters.heroes.*;
-import co.za.wethinkcode.model.files.ReadFile;
-import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,7 +14,6 @@ public class Main {
         ValidateArguments validateArguments = new ValidateArguments();
         GameController gameController = new GameController();
         try {
-//            readFile.readFromFile("heroes.txt");
             validateArguments.numberOfArgs(args);
 
             createEnemies.createEnemies();
