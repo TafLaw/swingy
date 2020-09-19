@@ -6,7 +6,6 @@ import co.za.wethinkcode.model.maps.InitMap;
 import co.za.wethinkcode.model.maps.PlayerPosition;
 import co.za.wethinkcode.view.MapView;
 
-import java.util.ArrayList;
 
 public class MapController {
     private MapView mapView;
@@ -27,8 +26,6 @@ public class MapController {
             initMap.updatePlayerPosition(playerPosition.getPlayerRow(), playerPosition.getPlayerColumn());
             if (initMap.metEnemy && mapView.section == 1) {
                 ConsoleGame.section = 2;
-//                System.out.println("CallBack: "+mapView.section);
-//                this.callBack();
             }
         }
         mapView.viewMap(playerPosition, initMap, hero);
@@ -54,21 +51,10 @@ public class MapController {
         initMap = new InitMap(hero.getAboutHero().getLevel());
 
         playerPosition = new PlayerPosition(initMap.getRows(), initMap.getColumns());
-        //TODO: Set the player position to the map
         initMap.playerPosition(playerPosition.getPlayerRow(), playerPosition.getPlayerColumn());
-        //TODO: Set the enemies randomly to the map
         initMap.setRandomEnemies();
         initMap.setPlayerPosition(playerPosition);
         objCreated++;
-    }
-
-    private void callBack() {
-        mapView.section = 2;
-        this.viewMap(heroesFactory);
-    }
-
-    public int section(){
-        return mapView.section;
     }
 
     public void resetEnemy(int row, int col){
