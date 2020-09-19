@@ -67,7 +67,7 @@ public class MapPanel extends JPanel {
     }
 
     private void drawGrid(Graphics2D g2){
-//        g2.setColor(Color.WHITE);
+        g2.setColor(Color.black);
         for (int i = 0; i < rows + 1; i++) {
             g2.drawLine(originX, originY + i * cellSide, originX + cols * cellSide, originY + i * cellSide);
         }
