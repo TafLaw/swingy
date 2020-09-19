@@ -232,7 +232,7 @@ public class ConsoleGame extends AbGame {
         hero = createHero.createHero(name.trim(), CreateHero.heroTypes.get(check - 1));
         if (hero == null) {
             option = scanner.nextLine();
-            play(this.createHero);
+            return;
         }
         heroInitialHP = hero.getAboutHero().getHitPoints();
         heroIndex = allHeroes.size() - 1;
