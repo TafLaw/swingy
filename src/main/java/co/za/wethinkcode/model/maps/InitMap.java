@@ -12,7 +12,6 @@ public class InitMap {
     private PlayerPosition playerPosition;
 
     public InitMap(int level) {
-        System.out.println("level "+level);
         this.entry = true;
         this.level = level;
         this.rows = (level-1)*5+10-(level%2);
@@ -36,16 +35,8 @@ public class InitMap {
         return rows;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
     public int getColumns() {
         return columns;
-    }
-
-    public void setColumns(int columns) {
-        this.columns = columns;
     }
 
     protected void createMap(){
@@ -62,7 +53,7 @@ public class InitMap {
         {
             for(int c = 0; c < this.getColumns(); c++)
             {
-                if(wholeMap[r][c] == "H")
+                if(wholeMap[r][c].equals("H"))
                     wholeMap[r][c] = ".";
                 if((r == row) && (c == column))
                 {
@@ -83,7 +74,7 @@ public class InitMap {
         {
             for(int c = 0; c < this.getColumns(); c++)
             {
-                if(wholeMap[r][c] == "H")
+                if(wholeMap[r][c].equals("H"))
                     wholeMap[r][c] = ".";
                 if((r == row) && (c == column))
                 {
