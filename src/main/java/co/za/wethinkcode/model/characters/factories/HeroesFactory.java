@@ -10,7 +10,7 @@ public class HeroesFactory {
     private HeroName heroName;
     private Stats stats;
     private AboutHero aboutHero;
-    private HashMap<String, Integer> weapons = new HashMap<String, Integer>();
+    private HashMap<String, Integer> weapons = new HashMap<>();
 
 
     public HeroesFactory(Build builder) {
@@ -37,24 +37,12 @@ public class HeroesFactory {
         return heroName;
     }
 
-    public void setHeroName(HeroName heroName) {
-        this.heroName = heroName;
-    }
-
     public Stats getStats() {
         return stats;
     }
 
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
-
     public AboutHero getAboutHero() {
         return aboutHero;
-    }
-
-    public void setAboutHero(AboutHero aboutHero) {
-        this.aboutHero = aboutHero;
     }
 
     public static class Build {
