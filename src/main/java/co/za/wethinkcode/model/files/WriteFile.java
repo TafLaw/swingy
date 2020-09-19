@@ -1,14 +1,12 @@
 package co.za.wethinkcode.model.files;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class WriteFile {
-    //public static ArrayList<String> allMessages = new ArrayList<String>();
     public void writeToFile(ArrayList<String> heroes)
     {
         try {
