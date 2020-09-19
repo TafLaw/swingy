@@ -17,7 +17,6 @@ public class ConsoleController {
     private ConsoleGame consoleGameObj;
     private Scanner scanner;
     private String option;
-    //public static HeroesFactory heroStats;
 
     public ConsoleController(ConsoleGame consoleGameObj) {
         consoleViews = new ConsoleViews();
@@ -40,7 +39,6 @@ public class ConsoleController {
     }
 
     public void myHeroStats(HeroesFactory hero){
-        //this.heroStats = hero;
         heroStatsView.myHeroStats(hero);
     }
 
@@ -57,11 +55,8 @@ public class ConsoleController {
     }
 
     public void gameOver(ArrayList<String> results) {
-        System.out.println(results.lastIndexOf(results));
         consoleViews.gameOver(results);
         option = scanner.nextLine();
-        System.out.println("GOINF TO THE START SCREEN");
-//        this.startScreen();
     }
 
     public void wonBattle(ArrayList<String> results) {
@@ -87,22 +82,11 @@ public class ConsoleController {
             option = scanner.nextLine();
         }
 
-        //consoleGameObj.backToMap();
     }
 
     public void cantLevelUp() {
         consoleViews.cantLevelUp();
         option = scanner.nextLine();
         consoleGameObj.saveAndExit();
-        //consoleGameObj.backToMain();
     }
-
-//    public void startConsole(CreateHero createHero){
-//        play.play(createHero);
-//        //TODO: FUNCTIONALITY WILL BE IN THE MODEL/GAME/CONSOLEGAME CLASS
-//    }
-
-//    public void startGame(){
-//        play.play();
-//    }
 }
