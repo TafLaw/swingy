@@ -13,20 +13,11 @@ import co.za.wethinkcode.storage.HeroStorage;
 import java.util.ArrayList;
 import java.util.Random;
 
-//import static co.za.wethinkcode.model.characters.heroes.HeroType.*;
-
 public class GuiGame extends AbGame{
-//    private CreateHero createHero;
     private GuiController guiController;
     private HeroStorage heroStorage;
-    //private HeroesFactory hero;
     private MapController mapController;
     private Game game;
-    private int playerRow;
-    private int playerCol;
-    private int playerEnemyRow;
-    private int playerEnemyCol;
-
     public GuiGame(MapController mapController, Game game, GameController gameController) {
         this.gameController = gameController;
         this.mapController = mapController;
@@ -59,10 +50,6 @@ public class GuiGame extends AbGame{
             levelUp();
     }
 
-    public CreateHero getha(){
-        return this.createHero;
-    }
-
     public String[] getAllHeroes(){
         return heroStorage.allAvailableHeroes().toArray(new String[]{});
     }
@@ -72,7 +59,6 @@ public class GuiGame extends AbGame{
         hero = createHero.createHero(name.trim(), CreateHero.heroTypes.get(heroType.ordinal()));
         if (hero == null) {
             guiController.showError();
-//            play(this.createHero);
         }
         else {
             heroIndex = allHeroes.size() - 1;
@@ -100,7 +86,6 @@ public class GuiGame extends AbGame{
         Random random = new Random();
         int randomEnemy;
         randomEnemy = random.nextInt(CreateEnemies.enemiesFactory.size());
-        //this.guiController.enemyStats(CreateEnemies.enemiesFactory.get(randomEnemy));
         theVillain = CreateEnemies.enemiesFactory.get(randomEnemy);
         return theVillain;
     }
@@ -113,7 +98,6 @@ public class GuiGame extends AbGame{
         return theVillain;
     }
 
-//    @Override
     protected void levelUp() {
 
         int newLevel = hero.getAboutHero().getLevel() + 1;
@@ -125,8 +109,6 @@ public class GuiGame extends AbGame{
             hero.getAboutHero().setLevel(newLevel);
             mapController.updateObjCreated();
             saveAndExit();
-//            guiController.backToMap();
-
         }
         else this.cantLevelUp();
     }
@@ -141,7 +123,6 @@ public class GuiGame extends AbGame{
 
     public void save() {
         this.saveAndExit();
-
     }
 
     public void switchToConsole() {
