@@ -10,8 +10,6 @@ public class GameController {
     private Game game;
 
     public GameController() {
-
-        //TODO: initalize everything that needs to be
         game = new Game();
         mapController = new MapController();
         playConsole = new ConsoleGame(mapController, game, this);
@@ -20,12 +18,10 @@ public class GameController {
 
     public void startConsole(CreateHero createHero){
         playConsole.play(createHero);
-        //TODO: FUNCTIONALITY WILL BE IN THE MODEL/GAME/CONSOLEGAME CLASS
     }
 
     public void startGui(CreateHero createHero){
         playGui.play(createHero);
-        //TODO: FUNCTIONALITY WILL BE IN THE MODEL/GAME/GUIGAME CLASS
     }
 
 }
