@@ -1,12 +1,1 @@
-Tafadzwa,Ronin,4,53,7900,97,92,Sword,Gauntlet,Mask
-Haren,Shinobi,2,50,2250,73,77,Sjambok,Couter,Rusty
-awsdf,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-tryu,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Retss,Samurai,1,40,350,65,62,Sword,Gauntlet,Violet
-Mercy,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-WEs,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-QAAAWWA,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-dthth,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-Aweq,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
-Asawe,Samurai,1,40,0,65,62,Sword,Gauntlet,Violet
-ASWEQ,Ninja,1,40,0,60,56,Ninja Stars,Couter,Sphere
+Tafadzwa,Ninja,2,48,1400,63,60,Knife,Couter,Sphere
