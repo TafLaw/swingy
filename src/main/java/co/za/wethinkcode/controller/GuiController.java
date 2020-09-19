@@ -209,6 +209,9 @@ public class GuiController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            guiViews.availableHeroesButton.removeActionListener(availableHeroesScreenHandler);
+            guiViews.switchToConsoleButton.removeActionListener(switchToConsoleHandler);
+            guiViews.createHeroButton.removeActionListener(startScreenHandler);
             guiViews.closeWindow();
             guiGameObj.switchToConsole();
         }
