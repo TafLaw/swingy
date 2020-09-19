@@ -14,7 +14,6 @@ import java.util.logging.Level;
 public class CreateHero extends HeroStorage {
     private static Validator validator;
     private HeroName name;
-//    public static HeroesFactory hero;
     private Stats stats;
     private AboutHero aboutHero;
     public HeroesFactory heroesFactory;
@@ -49,7 +48,6 @@ public class CreateHero extends HeroStorage {
         this.aboutHero = new AboutHero.Build().attack(this.attack).defence(this.defence).experience(0).level(this.level).hitPoints(this.hitPoints).build();
         this.heroesFactory = new HeroesFactory.Build().aboutHero(aboutHero).artifacts(stats).heroName(this.name).build();
 
-        //validate(this.name);
         Set<ConstraintViolation<HeroName>> constraintViolations = validator.validate(this.name);
 
         if (constraintViolations.size() > 0) {
@@ -61,15 +59,6 @@ public class CreateHero extends HeroStorage {
         this.saveHero(this.heroesFactory);
         return this.heroesFactory;
     }
-
-//    public static void validate(HeroName heroName) {
-//
-//        Set<ConstraintViolation<HeroName>> cvs = validator.validate(heroName);
-//
-//        for (ConstraintViolation<HeroName> cv : cvs) {
-//            System.out.println(cv.getPropertyPath() + ": " + cv.getMessage());
-//        }
-//    }
 
     private void setStats(String heroType){
         switch (heroType){
@@ -111,6 +100,4 @@ public class CreateHero extends HeroStorage {
                 break;
         }
     }
-
-
 }
