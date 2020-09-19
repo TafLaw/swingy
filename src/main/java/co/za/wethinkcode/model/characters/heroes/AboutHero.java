@@ -1,6 +1,5 @@
 package co.za.wethinkcode.model.characters.heroes;
 
-import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 
 public class AboutHero {
     private int level;
