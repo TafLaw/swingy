@@ -43,8 +43,7 @@ public class HeroStorage {
 
     public void saveHero(HeroesFactory heroesFactory){
         writeFile.writeToFile(addToHeroesList(heroesFactory));
-//        ReadFile.allHeroes.clear();
-//        readFile.readFromFile("heroes.txt");
+
     }
 
     public void saveAndExit(HeroesFactory hero, int index) {
