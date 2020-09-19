@@ -1,7 +1,5 @@
 package co.za.wethinkcode.exceptions;
 
-import co.za.wethinkcode.exceptions.InvalidArgsException;
-
 public class ValidateArguments {
 
     public boolean numberOfArgs(String[] args) throws InvalidArgsException
