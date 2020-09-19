@@ -15,8 +15,6 @@ import java.util.List;
 import static co.za.wethinkcode.model.characters.heroes.HeroType.*;
 
 public class GuiController {
-    //private GuiGame play;
-    private EnemiesFactory enemiesFactory;
     private GuiViews guiViews;
     private GuiGame guiGameObj;
     public StartScreenHandler startScreenHandler;
@@ -33,7 +31,6 @@ public class GuiController {
     public InitMap initMap;
 
     public GuiController(MapController mapController) {
-        //play = new GuiGame();
         this.mapController = mapController;
         switchToConsoleHandler = new SwitchToConsoleHandler();
         droppedArtifactHandler = new DroppedArtifactHandler();
@@ -53,7 +50,6 @@ public class GuiController {
 
     public void startScreen(GuiController guiController, GuiGame guiGame){
         guiGameObj = guiGame;
-//        allHeroes = this.getAllHeroes();
         guiViews.viewSetUp(guiController);
     }
 
@@ -142,22 +138,6 @@ public class GuiController {
         guiViews.error();
     }
 
-//    public class moveUpHandler implements ActionListener{
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            guiViews.activeHero = gameHero;
-//
-//            movePlayer(e.getActionCommand());
-//            guiViews.updateStats(guiViews.activeHero);
-//            guiViews.mapPanel.repaint();
-//
-//            if (guiControllerObj.initMap.metEnemy){
-//                enemyStatsScreen(guiControllerObj.getEnemyStats());
-//                guiControllerObj.resetMetEnemy();
-//            }
-//        }
-//    }
-
     public class StartScreenHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -197,8 +177,6 @@ public class GuiController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            System.out.println("Play once");
             guiViews.playScreen();
         }
     }
