@@ -6,7 +6,6 @@ import co.za.wethinkcode.model.characters.factories.EnemiesFactory;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.characters.heroes.CreateHero;
 
-import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,40 +28,20 @@ public abstract class AbGame {
     protected int playerEnemyRow;
     protected int playerEnemyCol;
 
-    public int getPlayerRow() {
-        return playerRow;
-    }
-
     public void setHeroIndex(int heroIndex) {
         this.heroIndex = heroIndex;
-    }
-
-    public int getHeroIndex() {
-        return heroIndex;
     }
 
     public void setPlayerRow(int playerRow) {
         this.playerRow = playerRow;
     }
 
-    public int getPlayerCol() {
-        return playerCol;
-    }
-
     public void setPlayerCol(int playerCol) {
         this.playerCol = playerCol;
     }
 
-    public int getPlayerEnemyRow() {
-        return playerEnemyRow;
-    }
-
     public void setPlayerEnemyRow(int playerEnemyRow) {
         this.playerEnemyRow = playerEnemyRow;
-    }
-
-    public int getPlayerEnemyCol() {
-        return playerEnemyCol;
     }
 
     public void setPlayerEnemyCol(int playerEnemyCol) {
@@ -100,10 +79,7 @@ public abstract class AbGame {
         hero.getStats().setHelm(theVillain.getArtifacts().getHelm());
     }
 
-//    protected abstract boolean levelUp();
-
     public void saveAndExit() {
-        System.out.println("HP: "+ hero.getAboutHero().getHitPoints());
         hero.getAboutHero().setHitPoints(heroInitialHP + gainedHP);
         createHero.saveAndExit(hero, heroIndex);
     }
@@ -113,7 +89,6 @@ public abstract class AbGame {
         int decider = random.nextInt(101);
         if (decider >= 0 && decider <= 50)
         {
-            //this.fightEnemy(enemiesFactory);
             return "fight";
         }
         else {
@@ -133,11 +108,8 @@ public abstract class AbGame {
         int resetEnemyHP = enemy.getAboutEnemy().getHitPoints();
         battleSimulation.clear();
 
-
-
         String heroWeapon = hero.getStats().getWeapon();
         String enemyWeapon = enemy.getArtifacts().getWeapon();
-        System.out.println(hero.getAboutHero().getHitPoints() + " " + enemy.getAboutEnemy().getHitPoints());
         while (hero.getAboutHero().getHitPoints() > 0 && enemy.getAboutEnemy().getHitPoints() > 0){
             playerHP = random.nextInt(hero.getWeapons().get(heroWeapon));
             playerHP = this.attackEnemy(playerHP, enemy);
@@ -156,8 +128,6 @@ public abstract class AbGame {
         if (hero.getAboutHero().getHitPoints() <= 0) {
             enemy.getAboutEnemy().setHitPoints(resetEnemyHP);
             battleSimulation.add("You fought bravely, but unfortunately your hero died!\n");
-            //this.gameOver(battleSimulation);
-//            hero.getAboutHero().setExperience();
             return "lost";
         }
         else {
@@ -188,7 +158,6 @@ public abstract class AbGame {
             return "won";
             //this.wonBattle(battleSimulation);
         }
-//        return "";
     }
 
     private boolean enemyDroppedArtifact() {
