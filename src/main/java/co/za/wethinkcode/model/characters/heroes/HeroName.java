@@ -1,10 +1,8 @@
 package co.za.wethinkcode.model.characters.heroes;
 
-import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
 
 public class HeroName {
     @NotEmpty(message = "A hero name can not be blank")
