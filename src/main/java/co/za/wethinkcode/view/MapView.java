@@ -3,8 +3,6 @@ package co.za.wethinkcode.view;
 import co.za.wethinkcode.model.characters.factories.HeroesFactory;
 import co.za.wethinkcode.model.maps.*;
 
-import java.util.ArrayList;
-
 public class MapView {
     public int section;
     public void viewMap(PlayerPosition playerPosition, InitMap initMap, HeroesFactory heroesFactory){
@@ -25,10 +23,7 @@ public class MapView {
             System.out.println("\nEXP : " + heroesFactory.getAboutHero().getExperience() + " | Weapon : " + heroesFactory.getStats().getWeapon() + " | HP : " + heroesFactory.getAboutHero().getHitPoints() + " | Level : "+heroesFactory.getAboutHero().getLevel()+ "\n");
             for (int r = 0; r < initMap.getRows(); r++) {
                 for (int c = 0; c < initMap.getColumns(); c++) {
-//                if(initMap.getWholeMap()[r][c] == "H")
-//                    initMap.getWholeMap()[r][c] = ".";
                     if ((r == playerPosition.getPlayerRow()) && (c == playerPosition.getPlayerColumn())) {
-                        //initMap.getWholeMap()[r][c] = "H";
                         System.out.print(initMap.getWholeMap()[r][c]);
                     } else {
                         value = initMap.getWholeMap()[r][c];
